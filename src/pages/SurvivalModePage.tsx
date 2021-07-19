@@ -9,6 +9,7 @@ import gameState from "../recoil/atoms/gameState";
 import SwitchLanguage from "../components/SwitchLanguage";
 import GameSurvivalInfo from "../components/Game/GameSurvivalInfo";
 import { GameMode } from "../types/game";
+import { Helmet } from "react-helmet";
 
 const SurvivalModePage = () => {
   const { t } = useTranslation();
@@ -17,6 +18,10 @@ const SurvivalModePage = () => {
 
   return (
     <div className="game-container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Pika pika! - Survival mode board</title>
+      </Helmet>
       <div className={`game-board game-${status}`}>
         <GameSurvivalInfo />
         <GameOverlay mode={GameMode.SURVIVAL_MODE} />

@@ -9,6 +9,7 @@ import gameState from "../recoil/atoms/gameState";
 import GameSpeedInfo from "../components/Game/GameSpeedInfo";
 import SwitchLanguage from "../components/SwitchLanguage";
 import { GameMode } from "../types/game";
+import { Helmet } from "react-helmet";
 
 const SpeedModePage = () => {
   const { t } = useTranslation();
@@ -17,6 +18,10 @@ const SpeedModePage = () => {
 
   return (
     <div className="game-container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Pika pika! - Speed mode board</title>
+      </Helmet>
       <div className={`game-board game-${status}`}>
         <GameSpeedInfo />
         <GameOverlay mode={GameMode.SPEED_MODE} />

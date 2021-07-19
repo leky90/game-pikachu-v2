@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -11,6 +12,10 @@ const MultiPlayerPage = () => {
 
   return (
     <div className="main-board">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Pika pika! - Multi player</title>
+      </Helmet>
       <div className="text-center">
         <p className="text-coming-soon">{t("Coming soon...")}</p>
         <Link to={Routes.MAIN_PAGE}>

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import { useRecoilValue } from "recoil";
 import SwitchLanguage from "../components/SwitchLanguage";
+import { Helmet } from "react-helmet";
 
 const SinglePlayerPage = () => {
   const { t } = useTranslation();
@@ -19,6 +20,10 @@ const SinglePlayerPage = () => {
 
   return (
     <div className="game-container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Pika pika! - Single player</title>
+      </Helmet>
       <div className="game-board">
         <RankBoard />
       </div>
