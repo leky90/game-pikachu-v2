@@ -7,6 +7,10 @@ img {
   object-fit: cover;
 }
 
+h1 {
+  font-size: 28px;
+}
+
 h1,
 h2,
 h3,
@@ -40,6 +44,25 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #60a5fa;
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 250px);
+}
+
+blockquote {
+  color: #000;
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
 }
 
 button {
@@ -81,6 +104,11 @@ button:hover {
   display: none;
 }
 
+.game-helper {
+  text-align: center;
+  font-style: italic;
+}
+
 .text-white {
   color: #fff;
 }
@@ -98,7 +126,13 @@ button:hover {
 }
 
 .sidebar {
-  padding: 24px;
+  padding: 32px 24px;
+  height: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .app {
@@ -118,6 +152,17 @@ button:hover {
   align-items: center;
 }
 
+.select-language {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.select-language strong {
+  cursor: pointer;
+  color: #3b82f6;
+}
+
 .max-screen-container {
   width: 100%;
   height: calc(100vh - 140px);
@@ -130,7 +175,7 @@ button:hover {
 }
 
 .game-container {
-  max-width: 1200px;
+  max-width: 1340px;
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -156,10 +201,24 @@ button:hover {
   position: relative;
 }
 
+.rank-board {
+  background-color: #000;
+}
+
+.game-board .game-info {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 1000;
+}
+
 .game-board {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid #26a0da;
@@ -170,9 +229,25 @@ button:hover {
   background-image: url(assets/images/bg-board.png);
   position: relative;
   grid-area: gameBoard;
+  background-color: #000;
 }
 
-.game-score {
+.game-completed.game-board {
+  background: #000;
+}
+
+.game-completed .game-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 50%;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.game-completed .game-score {
   text-align: center;
   color: #fff;
 }
@@ -187,6 +262,7 @@ button:hover {
   text-shadow: 2px 2px #26a0da;
   color: #fff;
   text-transform: uppercase;
+  margin: 10px 0 0 0;
 }
 
 .game-pokemon {
@@ -219,7 +295,7 @@ button:hover {
 }
 
 .board-4x5 {
-  grid-template-columns: repeat(8, calc(100% / 8));
+  grid-template-columns: repeat(7, calc(100% / 7));
 }
 
 .board-4x6 {
@@ -257,8 +333,7 @@ button:hover {
 .board-8x12 {
   grid-template-columns: repeat(14, calc(100% / 14));
 }
-
-.board-8x12 {
+.board-9x12 {
   grid-template-columns: repeat(14, calc(100% / 14));
 }
 
@@ -359,12 +434,12 @@ button:hover {
   z-index: 200;
 }
 
-.rank-board {
+.rank-list {
   padding-right: 40px;
   overflow: auto;
 }
 
-.rank-board li {
+.rank-list li {
   border-bottom: 1px solid #3b82f6;
   padding: 8px;
 }
@@ -388,5 +463,9 @@ button:hover {
   .mobile-helper {
     display: block;
     color: #60a5fa;
+    text-align: center;
+  }
+  .game-board .game-info .mobile-helper {
+    display: none;
   }
 }

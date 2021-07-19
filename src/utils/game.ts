@@ -83,11 +83,13 @@ export const reShufflePokemonList = (pokemonList: Record<string, Pokemon>) => {
 };
 
 export const makeListPokemons = (row: number, col: number) => {
-  const clonePokemonList: Pokemon[] = [];
-  pokemonList.map((pokemon) => {
-    clonePokemonList.push(pokemon);
-    return pokemon;
-  });
+  const clonePokemonList: Pokemon[] = pokemonList.sort(
+    () => Math.random() - 0.5
+  );
+  // pokemonList.map((pokemon) => {
+  //   clonePokemonList.push(pokemon);
+  //   return pokemon;
+  // });
   const total = (row * col) / 4;
   const slicePokemonList = clonePokemonList.slice(0, total);
   const nonShufflePokemonList = [
@@ -104,7 +106,8 @@ export const generatePokemonMatrix = (
   pokemons: Record<string, Pokemon>,
   rowSetting: number = 8,
   colSetting: number = 10
-): Pokemon[][] => {
+): { pokemonMatrix: Pokemon[][]; pokemons: Record<string, Pokemon> } => {
+  const newPokemons = { ...pokemons };
   const totalCol = colSetting + 2;
   const totalRow = rowSetting + 2;
   const pokemonKeys = Object.keys(pokemons);
@@ -125,14 +128,24 @@ export const generatePokemonMatrix = (
       } else {
         const pokemonKey = pokemonKeys.pop();
         if (pokemonKey) {
-          const pokemon = { ...pokemons[pokemonKey], nid: pokemonKey };
+          const pokemon = {
+            ...newPokemons[pokemonKey],
+            nid: pokemonKey,
+            row,
+            col,
+          };
+          newPokemons[pokemonKey] = {
+            ...newPokemons[pokemonKey],
+            rowIndex: row,
+            colIndex: col,
+          };
           pokemonMatrix[row].push(pokemon);
         }
       }
     }
   }
 
-  return pokemonMatrix as Pokemon[][];
+  return { pokemonMatrix, pokemons: newPokemons };
 };
 
 const cloneMatrix = (matrix: Pokemon[][]) => {
@@ -266,6 +279,7 @@ export const drawPath = (
 ) => {
   const limitRow = totalRow + 2;
   const limitCol = totalCol + 2;
+  console.log(pathPoints);
   return pathPoints.reduce(
     (newPathPoints, currentPoint, index, arrayPoints) => {
       let type: PointType = PointType.LINE;
@@ -286,8 +300,14 @@ export const drawPath = (
         } else {
           if (prevPoint.colIndex > currentPoint.colIndex) {
             direction = Direction.LEFT;
-          } else {
+          } else if (prevPoint.colIndex < currentPoint.colIndex) {
             direction = Direction.RIGHT;
+          } else {
+            if (prevPoint.rowIndex > currentPoint.rowIndex) {
+              direction = Direction.TOP;
+            } else if (prevPoint.rowIndex < currentPoint.rowIndex) {
+              direction = Direction.BOTTOM;
+            }
           }
         }
 
@@ -296,6 +316,8 @@ export const drawPath = (
           direction,
           type: PointType.LINE,
         };
+
+        console.log(extraPoint);
 
         do {
           switch (extraPoint.direction) {
@@ -393,7 +415,14 @@ export const checkConnectionSelectedPokemons = (
         ...newPokemons[selectedPokemon2.nid],
         matched: true,
       };
-      newMatrix = generatePokemonMatrix(newPokemons, rowSetting, colSetting);
+      const { pokemonMatrix } = generatePokemonMatrix(
+        newPokemons,
+        rowSetting,
+        colSetting
+      );
+      newMatrix = pokemonMatrix;
+    } else {
+      connectingLinePoints = [{ rowIndex: -1, colIndex: -1 }];
     }
 
     newSelectedPokemons.length = 0;
@@ -410,4 +439,65 @@ export const checkConnectionSelectedPokemons = (
     newPokemons,
     connectingLinePoints,
   };
+};
+
+export const checkCompletedLevel = (pokemons: Record<string, Pokemon>) => {
+  return (
+    Object.keys(pokemons).length &&
+    Object.entries(pokemons).findIndex(
+      ([_, pokemon]) => pokemon.matched === false
+    ) === -1
+  );
+};
+
+export const hasAnyConnectLine = (
+  pokemons: Record<string, Pokemon>,
+  matrix: Pokemon[][],
+  totalRow: number,
+  totalCol: number
+) => {
+  let foundConnectLine = false;
+  const entriesPokemons = Object.entries(pokemons);
+
+  while (entriesPokemons.length) {
+    const entryPokemon = entriesPokemons.pop();
+
+    if (entryPokemon === undefined) {
+      break;
+    }
+    const [nid, currentPokemon] = entryPokemon;
+
+    if (currentPokemon.matched === false) {
+      foundConnectLine = entriesPokemons.some(([nid, pokemon]) => {
+        if (currentPokemon.id === pokemon.id && pokemon.matched === false) {
+          const { connected } = hasConnectLine(
+            currentPokemon as PointCoords,
+            pokemon as PointCoords,
+            matrix,
+            totalRow,
+            totalCol
+          );
+
+          if (connected) {
+            console.log(
+              "debug thôi, đừng có xem",
+              currentPokemon.rowIndex,
+              currentPokemon.colIndex,
+              pokemon.rowIndex,
+              pokemon.colIndex
+            );
+          }
+
+          return connected;
+        }
+
+        return false;
+      });
+      if (foundConnectLine) {
+        break;
+      }
+    }
+  }
+
+  return foundConnectLine;
 };

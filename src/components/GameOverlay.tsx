@@ -1,11 +1,14 @@
 import { FC } from "react";
 import LineRow from "./Game/LineRow";
 import useGameOverlayEngine from "../hooks/useGameOverlayEngine";
+import { GameMode } from "../types/game";
 
-type GameOverlayProps = {};
+type GameOverlayProps = {
+  mode: GameMode;
+};
 
-const GameOverlay: FC<GameOverlayProps> = () => {
-  const { connectingLinePoints, matrix, row, col } = useGameOverlayEngine();
+const GameOverlay: FC<GameOverlayProps> = ({ mode }) => {
+  const { connectingLinePoints, matrix, row, col } = useGameOverlayEngine(mode);
 
   const columnCards = new Array(col + 2).fill(false);
 

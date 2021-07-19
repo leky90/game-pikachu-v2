@@ -7,14 +7,14 @@ import { Routes } from "../routes/CONSTANTS";
 const MultiPlayerPage = () => {
   const { t } = useTranslation();
 
-  const { playDisableSound } = useRecoilValue(gameSoundState);
+  const { playPopUpOnSound } = useRecoilValue(gameSoundState);
 
   return (
     <div className="main-board">
       <div className="text-center">
-        <p className="text-coming-soon">{t("Comming soon...")}</p>
+        <p className="text-coming-soon">{t("Coming soon...")}</p>
         <Link to={Routes.MAIN_PAGE}>
-          <button onClick={() => playDisableSound()}>{t("Main menu")}</button>
+          <button onClick={() => playPopUpOnSound()}>{t("Main menu")}</button>
         </Link>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import PokemonRow from "./Game/PokemonRow";
-import useGameSpeedEngine from "../hooks/useGameSpeedEngine";
+import useGameEngine from "../hooks/useGameEngine";
+import { GameMode } from "../types/game";
+import { FC } from "react";
 
-const GameSpeedBoard = () => {
-  const { matrix, row, col } = useGameSpeedEngine();
+const GameBoard: FC<{ mode: GameMode }> = ({ mode }) => {
+  const { matrix, row, col } = useGameEngine(mode);
 
   return (
     <div className={`game-pokemon board-${row}x${col}`}>
@@ -18,4 +20,4 @@ const GameSpeedBoard = () => {
   );
 };
 
-export default GameSpeedBoard;
+export default GameBoard;

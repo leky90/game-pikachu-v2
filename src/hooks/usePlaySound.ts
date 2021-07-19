@@ -13,6 +13,11 @@ import risingPopSound from "../assets/sound/rising-pops.mp3";
 import completeGameSound from "../assets/sound/game-completion.wav";
 import failedGameSound from "../assets/sound/gamers-fail-game.mp3";
 import nearlyEndTimeSound from "../assets/sound/time-limited.wav";
+import levelUpSound from "../assets/sound/levelup.mp3";
+import popDownSound from "../assets/sound/pop-down.mp3";
+import popUpOnSound from "../assets/sound/pop-up-on.mp3";
+import popUpOffSound from "../assets/sound/pop-up-off.mp3";
+import youWinSound from "../assets/sound/you-win.mp3";
 
 export enum Sound {
   MENU_OPEN = "MENU_OPEN",
@@ -27,6 +32,11 @@ export enum Sound {
   COMPLETE_GAME = "COMPLETE_GAME",
   FAIL_GAME = "FAIL_GAME",
   NEARLY_END_TIME = "NEARLY_END_TIME",
+  LEVEL_UP = "LEVEL_UP",
+  POP_DOWN = "POP_DOWN",
+  POP_UP_ON = "POP_UP_ON",
+  POP_UP_OFF = "POP_UP_OFF",
+  YOU_WIN = "YOU_WIN",
 }
 
 interface SoundOptions {
@@ -42,6 +52,7 @@ interface SoundOptions {
 export default function usePlaySound(sound?: Sound) {
   const defaultConfigSound: SoundOptions = {
     interrupt: true,
+    // volume: 1,
   };
   let soundPath = menuOpenSound;
   if (sound) {
@@ -79,7 +90,21 @@ export default function usePlaySound(sound?: Sound) {
       case Sound.NEARLY_END_TIME:
         soundPath = nearlyEndTimeSound;
         break;
-
+      case Sound.LEVEL_UP:
+        soundPath = levelUpSound;
+        break;
+      case Sound.POP_DOWN:
+        soundPath = popDownSound;
+        break;
+      case Sound.POP_UP_ON:
+        soundPath = popUpOnSound;
+        break;
+      case Sound.POP_UP_OFF:
+        soundPath = popUpOffSound;
+        break;
+      case Sound.YOU_WIN:
+        soundPath = youWinSound;
+        break;
       default:
         soundPath = menuOpenSound;
         break;

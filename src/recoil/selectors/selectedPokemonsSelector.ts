@@ -12,7 +12,7 @@ const selectedPokemonsSelector = selector({
     return selectedPokemons;
   },
   set: ({ set, get }, newValue) => {
-    const { row, col, status, matrix, pokemons } = get(gameState);
+    const { row, col, status, matrix, pokemons, level } = get(gameState);
     const selectedPokemons = get(selectedPokemonsState);
 
     const cloneSelectedPokemons = [...selectedPokemons];
@@ -32,15 +32,17 @@ const selectedPokemonsSelector = selector({
       col
     );
 
-    if (connectingLinePoints.length > 1) {
-      set(gameState, {
-        row,
-        col,
-        status,
-        matrix: newMatrix,
-        pokemons: newPokemons,
-      });
-
+    if (connectingLinePoints.length >= 1) {
+      if (connectingLinePoints.length > 1) {
+        set(gameState, {
+          row,
+          col,
+          status,
+          level,
+          matrix: newMatrix,
+          pokemons: newPokemons,
+        });
+      }
       set(gameOverlayState, {
         connectingLinePoints,
       });

@@ -17,6 +17,11 @@ const gameSoundState = atom<GameSound>({
     playNearlyEndTimeSound: () => {},
     playOffSound: () => {},
     playOnSound: () => {},
+    playLevelUpSound: () => {},
+    playPopDownSound: () => {},
+    playPopUpOnSound: () => {},
+    playPopUpOffSound: () => {},
+    playYouWinSound: () => {},
   },
 });
 

@@ -8,8 +8,12 @@ export function useGameSurvivalActions() {
   const [game, setGame] = useRecoilState(gameState);
   const initGame = () => {
     const pokemons = makeListPokemons(row, col);
-    const pokemonMatrix = generatePokemonMatrix(pokemons, row, col);
-    setGame({ ...game, matrix: pokemonMatrix });
+    const { pokemonMatrix, pokemons: newPokemons } = generatePokemonMatrix(
+      pokemons,
+      row,
+      col
+    );
+    setGame({ ...game, matrix: pokemonMatrix, pokemons: newPokemons });
   };
 
   useEffect(() => {

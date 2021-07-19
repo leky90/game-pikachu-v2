@@ -1,5 +1,10 @@
 import { atom } from "recoil";
-import { GameStatus, GameState, GameTypeState } from "../../types/game";
+import {
+  GameStatus,
+  GameState,
+  GameTypeState,
+  GameLevel,
+} from "../../types/game";
 
 const gameState = atom<GameState>({
   key: GameTypeState.GAME_STATE,
@@ -9,6 +14,7 @@ const gameState = atom<GameState>({
     col: 4,
     pokemons: {},
     matrix: [],
+    level: GameLevel.LEVEL_1,
   },
 });
 

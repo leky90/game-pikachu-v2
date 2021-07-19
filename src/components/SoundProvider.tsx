@@ -34,6 +34,16 @@ const SoundProvider: FC = ({ children }) => {
   } = usePlaySound(Sound.NEARLY_END_TIME);
   const { playSound: playRisingPopSound, loadedSound: loadedRisingPopSound } =
     usePlaySound(Sound.RISING_POP);
+  const { playSound: playPopDownSound, loadedSound: loadedPopDownSound } =
+    usePlaySound(Sound.POP_DOWN);
+  const { playSound: playPopUpOnSound, loadedSound: loadedPopUpOnSound } =
+    usePlaySound(Sound.POP_UP_OFF);
+  const { playSound: playPopUpOffSound, loadedSound: loadedPopUpOffSound } =
+    usePlaySound(Sound.POP_UP_ON);
+  const { playSound: playLevelUpSound, loadedSound: loadedLevelUpSound } =
+    usePlaySound(Sound.LEVEL_UP);
+  const { playSound: playYouWinSound, loadedSound: loadedYouWinSound } =
+    usePlaySound(Sound.YOU_WIN);
   const setSounds = useSetRecoilState(gameSoundState);
 
   useEffect(() => {
@@ -49,6 +59,11 @@ const SoundProvider: FC = ({ children }) => {
       loadedRisingPopSound !== null &&
       loadedCompletedGameSound !== null &&
       loadedFailedGameSound !== null &&
+      loadedPopDownSound !== null &&
+      loadedPopUpOnSound !== null &&
+      loadedPopUpOffSound !== null &&
+      loadedLevelUpSound !== null &&
+      loadedYouWinSound !== null &&
       loadedBiteSound !== null
     ) {
       setTimeout(() => {
@@ -65,6 +80,11 @@ const SoundProvider: FC = ({ children }) => {
           playOnSound,
           playOffSound,
           playNearlyEndTimeSound,
+          playPopUpOnSound,
+          playPopUpOffSound,
+          playLevelUpSound,
+          playPopDownSound,
+          playYouWinSound,
           soundReady: true,
         });
       }, 1000);
@@ -82,6 +102,11 @@ const SoundProvider: FC = ({ children }) => {
     loadedOnSound,
     loadedOffSound,
     loadedNearlyEndTimeSound,
+    loadedPopUpOnSound,
+    loadedPopUpOffSound,
+    loadedLevelUpSound,
+    loadedPopDownSound,
+    loadedYouWinSound,
   ]);
 
   return <>{children}</>;

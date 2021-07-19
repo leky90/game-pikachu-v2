@@ -19,7 +19,7 @@ const LineCard: FC<LineCardProps> = ({ point, rowIndex, colIndex }) => {
         direction && lineRef.current.classList.remove(direction);
         type && lineRef.current.classList.remove(type);
       }
-    }, 500);
+    }, 300);
     return () => {};
   }, [lineRef, direction, type]);
 

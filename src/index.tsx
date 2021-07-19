@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import "./services/i18n";
 import SoundProvider from "./components/SoundProvider";
 
 ReactDOM.render(
