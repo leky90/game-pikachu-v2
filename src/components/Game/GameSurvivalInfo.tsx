@@ -22,7 +22,6 @@ const GameSurvivalInfo = () => {
         endGame();
       } else {
         timeoutId = setTimeout(() => {
-          console.log(yourTiming);
           setGameTiming({
             yourTiming: yourTiming + 1,
             timing: timing - 1,

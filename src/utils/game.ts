@@ -279,7 +279,7 @@ export const drawPath = (
 ) => {
   const limitRow = totalRow + 2;
   const limitCol = totalCol + 2;
-  console.log(pathPoints);
+  // console.log(pathPoints);
   return pathPoints.reduce(
     (newPathPoints, currentPoint, index, arrayPoints) => {
       let type: PointType = PointType.LINE;
@@ -317,7 +317,7 @@ export const drawPath = (
           type: PointType.LINE,
         };
 
-        console.log(extraPoint);
+        // console.log(extraPoint);
 
         do {
           switch (extraPoint.direction) {
@@ -478,15 +478,15 @@ export const hasAnyConnectLine = (
             totalCol
           );
 
-          if (connected) {
-            console.log(
-              "debug thôi, đừng có xem",
-              currentPokemon.rowIndex,
-              currentPokemon.colIndex,
-              pokemon.rowIndex,
-              pokemon.colIndex
-            );
-          }
+          // if (connected) {
+          //   console.log(
+          //     "debug thôi, đừng có xem",
+          //     currentPokemon.rowIndex,
+          //     currentPokemon.colIndex,
+          //     pokemon.rowIndex,
+          //     pokemon.colIndex
+          //   );
+          // }
 
           return connected;
         }
