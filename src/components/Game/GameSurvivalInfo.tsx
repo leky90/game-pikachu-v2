@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
-import useGameEngine from "../../hooks/useGameEngine";
+import { useGameActions } from "../../hooks/useGameActions";
 import gameState from "../../recoil/atoms/gameState";
 import gameTimingState from "../../recoil/atoms/gameTimingState";
+import playerState from "../../recoil/atoms/playerState";
 import { GameMode, GameStatus } from "../../types/game";
 import { timeConvert } from "../../utils/time";
 
@@ -12,13 +13,15 @@ const GameSurvivalInfo = () => {
   const { level, status } = useRecoilValue(gameState);
   const [gameTiming, setGameTiming] = useRecoilState(gameTimingState);
   const { timing, yourTiming = 0 } = gameTiming;
-  const { replayGame, endGame } = useGameEngine(GameMode.SURVIVAL_MODE);
+  const [currentPlayer, setPlayer] = useRecoilState(playerState);
+  const { replayGame, endGame } = useGameActions(GameMode.SURVIVAL_MODE);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
 
     if (status === GameStatus.RUNNING) {
       if (timing <= 0) {
+        if (timeoutId) clearTimeout(timeoutId);
         endGame();
       } else {
         timeoutId = setTimeout(() => {
@@ -34,11 +37,17 @@ const GameSurvivalInfo = () => {
     };
   }, [timing, status]);
 
+  useEffect(() => {
+    if (status === GameStatus.COMPLETED) {
+      setPlayer({ ...currentPlayer, playerTiming: yourTiming });
+    }
+  }, [status]);
+
   return (
     <div className="game-info">
       <h1 className="game-title">
         {status === GameStatus.COMPLETED
-          ? t("Congratulations!")
+          ? t("Congratulations") + " " + currentPlayer.playerName
           : t("Survival mode")}
       </h1>
       <h3 className="game-title">

@@ -1,19 +1,20 @@
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
-import { useGameSpeedActions } from "../../hooks/useGameSpeedActions";
+import { useGameActions } from "../../hooks/useGameActions";
 import selectedPokemonsState from "../../recoil/atoms/selectedPokemonsState";
 
-import { Pokemon } from "../../types/game";
+import { GameMode, Pokemon } from "../../types/game";
 import PokemonCard from "./PokemonCard";
 
 type PokemonRowProps = {
   pokemons: Pokemon[];
   rowIndex: number;
+  mode: GameMode;
 };
 
-const PokemonRow: FC<PokemonRowProps> = ({ pokemons, rowIndex }) => {
+const PokemonRow: FC<PokemonRowProps> = ({ pokemons, rowIndex, mode }) => {
   const selectedPokemons = useRecoilValue(selectedPokemonsState);
-  const { selectPokemon } = useGameSpeedActions();
+  const { selectPokemon } = useGameActions(mode);
   return (
     <>
       {pokemons.map((pokemon, index) => (

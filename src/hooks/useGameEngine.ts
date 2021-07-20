@@ -1,28 +1,32 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import gameState from "../recoil/atoms/gameState";
 import gameTimingState from "../recoil/atoms/gameTimingState";
+import playerState from "../recoil/atoms/playerState";
 import {
+  BASE_START_TIME,
   GameLevel,
   GameMode,
-  gameOptions,
   GameStatus,
   nextLevel,
   Pokemon,
 } from "../types/game";
 import {
   generatePokemonMatrix,
-  makeListPokemons,
   checkCompletedLevel,
   hasAnyConnectLine,
   reShufflePokemonList,
 } from "../utils/game";
+import { useGameActions } from "./useGameActions";
 
 export default function useGameEngine(mode: GameMode) {
   const location = useLocation();
+  const { initGame, replayGame, endGame, addNewRankingScore } =
+    useGameActions(mode);
   const setGame = useSetRecoilState(gameState);
+  const currentPlayer = useRecoilValue(playerState);
   const setGameTiming = useSetRecoilState(gameTimingState);
   const {
     playFanfareSound,
@@ -32,52 +36,6 @@ export default function useGameEngine(mode: GameMode) {
   } = useRecoilValue(gameSoundState);
   const { matrix, row, col, status, pokemons, level } =
     useRecoilValue(gameState);
-
-  const initGame = useCallback(
-    (level: GameLevel) => {
-      const { row, col } = gameOptions[level];
-      const pokemons = makeListPokemons(row, col);
-      const { pokemonMatrix, pokemons: newPokemons } = generatePokemonMatrix(
-        pokemons,
-        row,
-        col
-      );
-      setGame({
-        pokemons: newPokemons,
-        matrix: pokemonMatrix,
-        level,
-        row,
-        col,
-        status: GameStatus.RUNNING,
-      });
-    },
-    [setGame]
-  );
-
-  const replayGame = () => {
-    playFanfareSound();
-    initGame(GameLevel.LEVEL_1);
-    if (mode === GameMode.SURVIVAL_MODE) {
-      setGameTiming({ timing: 30, yourTiming: 0 });
-    }
-    if (mode === GameMode.SPEED_MODE) {
-      setGameTiming({ timing: 0 });
-    }
-  };
-
-  const endGame = () => {
-    if (mode === GameMode.SURVIVAL_MODE) {
-      playYouWinSound();
-      setGame({
-        matrix,
-        row,
-        col,
-        pokemons,
-        level,
-        status: GameStatus.COMPLETED,
-      });
-    }
-  };
 
   const shuffleMatrix = (pokemons: Record<string, Pokemon>) => {
     const newShufflePokemons = reShufflePokemonList(pokemons);
@@ -96,12 +54,13 @@ export default function useGameEngine(mode: GameMode) {
     });
   };
 
+  // Setup game
   useEffect(() => {
     if (status === GameStatus.PENDING) {
       playFanfareSound();
       initGame(level);
       if (mode === GameMode.SURVIVAL_MODE) {
-        setGameTiming({ timing: 300, yourTiming: 0 });
+        setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
       }
       if (mode === GameMode.SPEED_MODE) {
         setGameTiming({ timing: 0 });
@@ -112,6 +71,18 @@ export default function useGameEngine(mode: GameMode) {
     };
   }, [status, initGame]);
 
+  // Check game completed and post result
+  useEffect(() => {
+    if (status === GameStatus.COMPLETED) {
+      addNewRankingScore(
+        mode,
+        currentPlayer.playerTiming,
+        currentPlayer.playerName
+      );
+    }
+  }, [currentPlayer.playerTiming]);
+
+  // Check completed one level and re-start new one higher level
   useEffect(() => {
     if (checkCompletedLevel(pokemons)) {
       const levelUp: GameLevel = nextLevel[level];
@@ -142,12 +113,13 @@ export default function useGameEngine(mode: GameMode) {
     }
   }, [pokemons]);
 
+  // Setup new game if access directly from browser
   useEffect(() => {
     if (status === GameStatus.RUNNING) {
       playFanfareSound();
       initGame(GameLevel.LEVEL_1);
       if (mode === GameMode.SURVIVAL_MODE) {
-        setGameTiming({ timing: 300, yourTiming: 0 });
+        setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
       }
       if (mode === GameMode.SPEED_MODE) {
         setGameTiming({ timing: 0 });

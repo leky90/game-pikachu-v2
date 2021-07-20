@@ -67,6 +67,36 @@ blockquote {
   padding: 0.5em 10px;
 }
 
+input {
+  text-decoration: none;
+  max-width: 100%;
+  width: 230px;
+  margin: 10px auto;
+  padding: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0;
+  box-shadow: 0 0 5px #eee;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    #26a0da 51%,
+    #314755 100%
+  );
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 button {
   text-decoration: none;
   max-width: 100%;
@@ -82,7 +112,6 @@ button {
   display: block;
   border: 0;
   box-shadow: 0 0 5px #eee;
-  cursor: pointer;
   background-image: linear-gradient(
     to right,
     #314755 0%,
@@ -162,6 +191,7 @@ button:hover {
 .select-language strong {
   cursor: pointer;
   color: #3b82f6;
+  font-size: 12px;
 }
 
 .max-screen-container {

@@ -10,3 +10,9 @@ export function timeConvert(num: number) {
     minutes.toString().padStart(2, "0")
   );
 }
+
+export function dateTimeFromTimestamp(timestamp: number) {
+  const dateObject = new Date(timestamp);
+
+  return dateObject.toLocaleString();
+}

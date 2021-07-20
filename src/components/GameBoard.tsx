@@ -11,6 +11,7 @@ const GameBoard: FC<{ mode: GameMode }> = ({ mode }) => {
       {matrix &&
         matrix.map((pokemons, index) => (
           <PokemonRow
+            mode={mode}
             key={`row-${index}`}
             rowIndex={index}
             pokemons={pokemons}

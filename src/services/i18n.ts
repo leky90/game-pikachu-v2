@@ -16,7 +16,8 @@ i18n
           Replay: "Replay",
           Language: "Language",
           Level: "Level",
-          "Congratulations!": "Congratulations!",
+          Welcome: "Welcome",
+          Congratulations: "Congratulations",
           "The fastest is best": "The fastest is best",
           "The longest is best": "The longest is best",
           "Your score": "Your score",
@@ -41,17 +42,22 @@ i18n
             "Choosing the wrong pair will increase the time",
           "Choosing the wrong pair will decrease the time":
             "Choosing the wrong pair will decrease the time",
+          "Accept alphabet and digit only.":
+            "Accept alphabet, digits and space only.",
+          "Please enter your name": "Please enter your name",
+          "Enter your name here": "Enter your name here",
         },
       },
       vi: {
         translation: {
           English: "Tiếng Anh",
           Vietnamese: "Tiếng Việt",
-          Back: "Trở lại",
+          Back: "Quay về",
           Replay: "Chơi lại",
           Language: "Ngôn ngữ",
           Level: "Cấp độ",
-          "Congratulations!": "Xin chúc mừng!",
+          Welcome: "Chào bạn",
+          Congratulations: "Xin chúc mừng",
           "The fastest is best": "Hoàn thành càng sớm, thứ hạng càng cao",
           "The longest is best":
             "Kéo dài thời gian càng lâu, thứ hạng càng cao",
@@ -77,6 +83,10 @@ i18n
             "Chọn sai cặp sẽ bị tăng thêm thời gian",
           "Choosing the wrong pair will decrease the time":
             "Chọn sai cặp sẽ bị giảm thời gian",
+          "Accept alphabet and digit only.":
+            "Chỉ chấp nhận chữ cái, chữ số và kí tự trắng.",
+          "Please enter your name": "Hãy nhập tên của bạn",
+          "Enter your name here": "Nhập tên bạn tại đây",
         },
       },
     },

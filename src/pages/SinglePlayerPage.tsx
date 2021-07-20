@@ -2,17 +2,18 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import RankBoard from "../components/RankBoard";
 import { Routes } from "../routes/CONSTANTS";
-import { useGameSpeedActions } from "../hooks/useGameSpeedActions";
+import { useGameActions } from "../hooks/useGameActions";
 import { useEffect } from "react";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import { useRecoilValue } from "recoil";
 import SwitchLanguage from "../components/SwitchLanguage";
 import { Helmet } from "react-helmet";
+import { GameMode } from "../types/game";
 
 const SinglePlayerPage = () => {
   const { t } = useTranslation();
   const { playPopUpOnSound } = useRecoilValue(gameSoundState);
-  const { resetGame } = useGameSpeedActions();
+  const { resetGame } = useGameActions(GameMode.SURVIVAL_MODE);
 
   useEffect(() => {
     resetGame();

@@ -1,4 +1,8 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { getTopRanking } from "../api/ranking";
+import { GameMode } from "../types/game";
+import TopList from "./Rank/TopList";
 
 const RankBoard = () => {
   const { t } = useTranslation();
@@ -11,127 +15,17 @@ const RankBoard = () => {
           <h4>
             <em>{t("The longest is best")}</em>
           </h4>
-          <ol className="rank-list">
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-          </ol>
+          <TopList fetch={() => getTopRanking(GameMode.SURVIVAL_MODE)} />
         </div>
         <div className="col">
           <h4>
             <em>{t("The fastest is best")}</em>
           </h4>
-          <ol className="rank-list">
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-            <li>Player</li>
-          </ol>
+          <TopList fetch={() => getTopRanking(GameMode.SPEED_MODE)} />
         </div>
       </div>
     </div>
   );
 };
 
-export default RankBoard;
+export default memo(RankBoard, () => true);

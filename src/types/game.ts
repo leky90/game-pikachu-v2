@@ -2,6 +2,11 @@ export enum GameSelector {
   SELECTED_POKEMONS_SELECTOR = "SELECTED_POKEMONS_SELECTOR",
 }
 
+export interface PlayerState {
+  playerName: string;
+  playerTiming: number;
+}
+
 export interface Pokemon {
   id: string;
   matched: boolean;
@@ -12,8 +17,8 @@ export interface Pokemon {
 }
 
 export enum GameMode {
-  SURVIVAL_MODE = "SURVIVAL_MODE",
-  SPEED_MODE = "SPEED_MODE",
+  SURVIVAL_MODE = "survival",
+  SPEED_MODE = "speed",
 }
 
 export interface GameSound {
@@ -38,6 +43,7 @@ export interface GameSound {
 }
 
 export enum GameTypeState {
+  PLAYER_STATE = "PLAYER_STATE",
   GAME_STATE = "GAME_STATE",
   GAME_SOUND_STATE = "GAME_SOUND_STATE",
   GAME_TIMING_STATE = "GAME_TIMING_STATE",
@@ -188,3 +194,5 @@ export const nextLevel = {
   [GameLevel.LEVEL_13]: GameLevel.LEVEL_14,
   [GameLevel.LEVEL_14]: GameLevel.LEVEL_14,
 };
+
+export const BASE_START_TIME = 5;
