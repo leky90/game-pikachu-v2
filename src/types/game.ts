@@ -179,7 +179,7 @@ export const gameOptions: GameOptions = {
 };
 
 export const nextLevel = {
-  [GameLevel.LEVEL_1]: GameLevel.LEVEL_2,
+  [GameLevel.LEVEL_1]: GameLevel.LEVEL_1,
   [GameLevel.LEVEL_2]: GameLevel.LEVEL_3,
   [GameLevel.LEVEL_3]: GameLevel.LEVEL_4,
   [GameLevel.LEVEL_4]: GameLevel.LEVEL_5,

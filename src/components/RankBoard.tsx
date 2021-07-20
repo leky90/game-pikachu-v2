@@ -15,13 +15,19 @@ const RankBoard = () => {
           <h4>
             <em>{t("The longest is best")}</em>
           </h4>
-          <TopList fetch={() => getTopRanking(GameMode.SURVIVAL_MODE)} />
+          <TopList
+            fetch={() => getTopRanking(GameMode.SURVIVAL_MODE)}
+            mode={GameMode.SURVIVAL_MODE}
+          />
         </div>
         <div className="col">
           <h4>
             <em>{t("The fastest is best")}</em>
           </h4>
-          <TopList fetch={() => getTopRanking(GameMode.SPEED_MODE)} />
+          <TopList
+            fetch={() => getTopRanking(GameMode.SPEED_MODE)}
+            mode={GameMode.SURVIVAL_MODE}
+          />
         </div>
       </div>
     </div>
