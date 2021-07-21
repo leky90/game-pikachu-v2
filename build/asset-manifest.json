@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/game-pikachu-v2/build/static/css/main.1108f070.chunk.css",
-    "main.js": "/game-pikachu-v2/build/static/js/main.9416c973.chunk.js",
-    "main.js.map": "/game-pikachu-v2/build/static/js/main.9416c973.chunk.js.map",
-    "runtime-main.js": "/game-pikachu-v2/build/static/js/runtime-main.fceb3cbe.js",
-    "runtime-main.js.map": "/game-pikachu-v2/build/static/js/runtime-main.fceb3cbe.js.map",
-    "static/js/2.5fe26a0f.chunk.js": "/game-pikachu-v2/build/static/js/2.5fe26a0f.chunk.js",
-    "static/js/2.5fe26a0f.chunk.js.map": "/game-pikachu-v2/build/static/js/2.5fe26a0f.chunk.js.map",
-    "static/js/3.976a3537.chunk.js": "/game-pikachu-v2/build/static/js/3.976a3537.chunk.js",
-    "static/js/3.976a3537.chunk.js.map": "/game-pikachu-v2/build/static/js/3.976a3537.chunk.js.map",
-    "static/js/4.464ff2d6.chunk.js": "/game-pikachu-v2/build/static/js/4.464ff2d6.chunk.js",
-    "static/js/4.464ff2d6.chunk.js.map": "/game-pikachu-v2/build/static/js/4.464ff2d6.chunk.js.map",
+    "main.css": "/game-pikachu-v2/build/static/css/main.65319fdc.chunk.css",
+    "main.js": "/game-pikachu-v2/build/static/js/main.9f738735.chunk.js",
+    "main.js.map": "/game-pikachu-v2/build/static/js/main.9f738735.chunk.js.map",
+    "runtime-main.js": "/game-pikachu-v2/build/static/js/runtime-main.f5a5ea5d.js",
+    "runtime-main.js.map": "/game-pikachu-v2/build/static/js/runtime-main.f5a5ea5d.js.map",
+    "static/js/2.f0756030.chunk.js": "/game-pikachu-v2/build/static/js/2.f0756030.chunk.js",
+    "static/js/2.f0756030.chunk.js.map": "/game-pikachu-v2/build/static/js/2.f0756030.chunk.js.map",
+    "static/js/3.ee0998bd.chunk.js": "/game-pikachu-v2/build/static/js/3.ee0998bd.chunk.js",
+    "static/js/3.ee0998bd.chunk.js.map": "/game-pikachu-v2/build/static/js/3.ee0998bd.chunk.js.map",
+    "static/js/4.8ed9ae12.chunk.js": "/game-pikachu-v2/build/static/js/4.8ed9ae12.chunk.js",
+    "static/js/4.8ed9ae12.chunk.js.map": "/game-pikachu-v2/build/static/js/4.8ed9ae12.chunk.js.map",
     "index.html": "/game-pikachu-v2/build/index.html",
-    "static/css/main.1108f070.chunk.css.map": "/game-pikachu-v2/build/static/css/main.1108f070.chunk.css.map",
-    "static/js/2.5fe26a0f.chunk.js.LICENSE.txt": "/game-pikachu-v2/build/static/js/2.5fe26a0f.chunk.js.LICENSE.txt",
-    "static/js/3.976a3537.chunk.js.LICENSE.txt": "/game-pikachu-v2/build/static/js/3.976a3537.chunk.js.LICENSE.txt",
+    "static/css/main.65319fdc.chunk.css.map": "/game-pikachu-v2/build/static/css/main.65319fdc.chunk.css.map",
+    "static/js/2.f0756030.chunk.js.LICENSE.txt": "/game-pikachu-v2/build/static/js/2.f0756030.chunk.js.LICENSE.txt",
+    "static/js/3.ee0998bd.chunk.js.LICENSE.txt": "/game-pikachu-v2/build/static/js/3.ee0998bd.chunk.js.LICENSE.txt",
     "static/media/App.css": "/game-pikachu-v2/build/static/media/bg-pikachu.446819de.jpeg",
     "static/media/bite.aea7caff.mp3": "/game-pikachu-v2/build/static/media/bite.aea7caff.mp3",
     "static/media/disable-sound.477d0574.mp3": "/game-pikachu-v2/build/static/media/disable-sound.477d0574.mp3",
@@ -35,9 +35,9 @@
     "static/media/you-win.70d95733.mp3": "/game-pikachu-v2/build/static/media/you-win.70d95733.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.fceb3cbe.js",
-    "static/js/2.5fe26a0f.chunk.js",
-    "static/css/main.1108f070.chunk.css",
-    "static/js/main.9416c973.chunk.js"
+    "static/js/runtime-main.f5a5ea5d.js",
+    "static/js/2.f0756030.chunk.js",
+    "static/css/main.65319fdc.chunk.css",
+    "static/js/main.9f738735.chunk.js"
   ]
 }
