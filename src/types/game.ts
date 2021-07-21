@@ -3,6 +3,7 @@ export enum GameSelector {
 }
 
 export interface PlayerState {
+  rankingId?: string;
   playerName: string;
   playerTiming: number;
 }
@@ -179,7 +180,7 @@ export const gameOptions: GameOptions = {
 };
 
 export const nextLevel = {
-  [GameLevel.LEVEL_1]: GameLevel.LEVEL_1,
+  [GameLevel.LEVEL_1]: GameLevel.LEVEL_2,
   [GameLevel.LEVEL_2]: GameLevel.LEVEL_3,
   [GameLevel.LEVEL_3]: GameLevel.LEVEL_4,
   [GameLevel.LEVEL_4]: GameLevel.LEVEL_5,
@@ -196,3 +197,5 @@ export const nextLevel = {
 };
 
 export const BASE_START_TIME = 5;
+export const BONUS_TIME = 2;
+export const PENALTY_TIME = 5;

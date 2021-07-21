@@ -23,8 +23,13 @@ import { useGameActions } from "./useGameActions";
 
 export default function useGameEngine(mode: GameMode) {
   const location = useLocation();
-  const { initGame, replayGame, endGame, addNewRankingScore } =
-    useGameActions(mode);
+  const {
+    initGame,
+    replayGame,
+    endGame,
+    addNewRankingScore,
+    updateNewRankingScore,
+  } = useGameActions(mode);
   const setGame = useSetRecoilState(gameState);
   const currentPlayer = useRecoilValue(playerState);
   const setGameTiming = useSetRecoilState(gameTimingState);
@@ -59,6 +64,7 @@ export default function useGameEngine(mode: GameMode) {
     if (status === GameStatus.PENDING) {
       playFanfareSound();
       initGame(level);
+      addNewRankingScore(mode, currentPlayer.playerName);
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
       }
@@ -74,13 +80,16 @@ export default function useGameEngine(mode: GameMode) {
   // Check game completed and post result
   useEffect(() => {
     if (status === GameStatus.COMPLETED) {
-      addNewRankingScore(
-        mode,
-        currentPlayer.playerTiming,
-        currentPlayer.playerName
-      );
+      if (currentPlayer.rankingId) {
+        updateNewRankingScore(
+          currentPlayer.rankingId,
+          mode,
+          currentPlayer.playerName,
+          currentPlayer.playerTiming
+        );
+      }
     }
-  }, [currentPlayer.playerTiming]);
+  }, [currentPlayer.rankingId, currentPlayer.playerTiming]);
 
   // Check completed one level and re-start new one higher level
   useEffect(() => {

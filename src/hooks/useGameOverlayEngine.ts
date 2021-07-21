@@ -3,7 +3,7 @@ import gameState from "../recoil/atoms/gameState";
 import gameOverlayState from "../recoil/atoms/gameOverlayState";
 import { useEffect } from "react";
 import gameSoundState from "../recoil/atoms/gameSoundState";
-import { GameMode } from "../types/game";
+import { BONUS_TIME, GameMode, PENALTY_TIME } from "../types/game";
 import gameTimingState from "../recoil/atoms/gameTimingState";
 
 export default function useGameOverlayEngine(mode: GameMode) {
@@ -16,12 +16,14 @@ export default function useGameOverlayEngine(mode: GameMode) {
     if (connectingLinePoints.length === 1) {
       playGlugSound();
       if (mode === GameMode.SPEED_MODE) {
-        setGameTiming((gameTiming) => ({ timing: gameTiming.timing + 5 }));
+        setGameTiming((gameTiming) => ({
+          timing: gameTiming.timing + PENALTY_TIME,
+        }));
       }
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming((gameTiming) => ({
           ...gameTiming,
-          timing: gameTiming.timing - 5,
+          timing: gameTiming.timing - PENALTY_TIME,
         }));
       }
     }
@@ -30,7 +32,7 @@ export default function useGameOverlayEngine(mode: GameMode) {
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming((gameTiming) => ({
           ...gameTiming,
-          timing: gameTiming.timing + 2,
+          timing: gameTiming.timing + BONUS_TIME,
         }));
       }
     }

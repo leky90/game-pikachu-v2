@@ -31,6 +31,7 @@ i18n
           "Survival mode": "Survival mode",
           "Coming soon...": "Coming soon...",
           "Scroll down to play": "Scroll down to play",
+          "Scroll down to chat": "Scroll down to chat",
           "Preparing resource...": "Preparing resource...",
           "Please complete all levels as fast as you can":
             "Please complete all levels as fast as you can",
@@ -46,6 +47,10 @@ i18n
             "Accept alphabet, digits and space only.",
           "Please enter your name": "Please enter your name",
           "Enter your name here": "Enter your name here",
+          "Make your own ranking": "Make your own ranking",
+          "Make match": "Make match",
+          "Find random match": "Find random match",
+          "Enter your message here...": "Enter your message here...",
         },
       },
       vi: {
@@ -73,6 +78,7 @@ i18n
           "Coming soon...": "Đang phát triển...",
           "Preparing resource...": "Đang chuẩn bị...",
           "Scroll down to play": "Lăn chuột xuống để chơi",
+          "Scroll down to chat": "Lăn chuột xuống để nhắn tin",
           "Please complete all levels as fast as you can":
             "Hãy hoàn thành tất cả cấp độ nhanh nhất có thể ",
           "Try your best not to run out of time as long as possible":
@@ -87,6 +93,10 @@ i18n
             "Chỉ chấp nhận chữ cái, chữ số và kí tự trắng.",
           "Please enter your name": "Hãy nhập tên của bạn",
           "Enter your name here": "Nhập tên bạn tại đây",
+          "Make your own ranking": "Tạo xếp hạng của bạn",
+          "Make match": "Tạo trận đấu",
+          "Find random match": "Tìm trận ngẫu nhiên",
+          "Enter your message here...": "Nhập tin nhắn tại đây...",
         },
       },
     },

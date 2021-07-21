@@ -29,25 +29,34 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
         topPlayersResponse.data === null &&
         (mode === GameMode.SPEED_MODE ? (
           <Link to={Routes.SPEED_MODE_PAGE}>
-            <button onClick={() => playPopUpOnSound()}>
-              {t("Speed mode")}
+            <button
+              onClick={() => playPopUpOnSound()}
+              style={{ width: "calc(100% - 32px)", margin: 16 }}
+            >
+              {t("Make your own ranking")}
             </button>
           </Link>
         ) : (
           <Link to={Routes.SURVIVAL_MODE_PAGE}>
-            <button onClick={() => playPopUpOnSound()}>
-              {t("Survival mode")}
+            <button
+              onClick={() => playPopUpOnSound()}
+              style={{ width: "calc(100% - 32px)", margin: 16 }}
+            >
+              {t("Make your own ranking")}
             </button>
           </Link>
         ))}
       <ol className="rank-list">
         {status === ResponseStatus.SUCCESS &&
-          topPlayersResponse?.data?.map((player: TopPlayer) => (
-            <li key={`id-${player.timestamp}-${player.playerName}`}>
-              {player.playerName} - {timeConvert(player.timing)} -{" "}
-              {dateTimeFromTimestamp(player.timestamp)}
-            </li>
-          ))}
+          topPlayersResponse?.data?.map(
+            (player: TopPlayer, index: number) =>
+              player.timing && (
+                <li key={`id-${index}`}>
+                  {player.playerName} - {timeConvert(player.timing)} -{" "}
+                  {dateTimeFromTimestamp(player.timestamp)}
+                </li>
+              )
+          )}
         {status === ResponseStatus.ERROR && error && (
           <p className="has-error">{error}</p>
         )}

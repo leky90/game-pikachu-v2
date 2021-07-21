@@ -60,7 +60,9 @@ const GameSurvivalInfo = () => {
         {t("Remaining time")}: {timeConvert(timing)}
       </p>
       <p>
-        <button onClick={replayGame}>{t("Replay")}</button>
+        <button onClick={() => replayGame(currentPlayer.playerName)}>
+          {t("Replay")}
+        </button>
       </p>
     </div>
   );

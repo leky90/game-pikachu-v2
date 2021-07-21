@@ -14,16 +14,18 @@ import {
 } from "../types/game";
 import { generatePokemonMatrix, makeListPokemons } from "../utils/game";
 import gameTimingState from "../recoil/atoms/gameTimingState";
-import { addNewRanking, TopPlayer } from "../api/ranking";
+import { addNewRanking, TopPlayer, updateNewRanking } from "../api/ranking";
+import playerState from "../recoil/atoms/playerState";
 
 export function useGameActions(mode: GameMode) {
   const setGame = useSetRecoilState(gameState);
+  const setPlayer = useSetRecoilState(playerState);
   const setGameTiming = useSetRecoilState(gameTimingState);
   const setSelectedPokemons = useSetRecoilState(selectedPokemonsSelector);
   const resetGameState = useResetRecoilState(gameState);
   const resetGameOverlayState = useResetRecoilState(gameOverlayState);
   const resetSelectedPokemonsState = useResetRecoilState(selectedPokemonsState);
-  const { playBiteSound, playFanfareSound, playYouWinSound } =
+  const { playBiteSound, playFanfareSound, playNearlyEndTimeSound } =
     useRecoilValue(gameSoundState);
 
   const selectPokemon = (
@@ -58,13 +60,15 @@ export function useGameActions(mode: GameMode) {
         col,
         status: GameStatus.RUNNING,
       });
+      setPlayer((currentPlayer) => ({ ...currentPlayer, playerTiming: 0 }));
     },
     [setGame]
   );
 
-  const replayGame = () => {
+  const replayGame = (playerName: string) => {
     playFanfareSound();
     initGame(GameLevel.LEVEL_1);
+    addNewRankingScore(mode, playerName);
     if (mode === GameMode.SURVIVAL_MODE) {
       setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
     }
@@ -75,7 +79,7 @@ export function useGameActions(mode: GameMode) {
 
   const endGame = () => {
     if (mode === GameMode.SURVIVAL_MODE) {
-      playYouWinSound();
+      playNearlyEndTimeSound();
       setGame((prevGame) => ({
         ...prevGame,
         status: GameStatus.COMPLETED,
@@ -83,18 +87,35 @@ export function useGameActions(mode: GameMode) {
     }
   };
 
-  const addNewRankingScore = (
-    mode: GameMode,
-    timing: number,
-    playerName: string
-  ) => {
+  const addNewRankingScore = (mode: GameMode, playerName: string) => {
     const playerScore: TopPlayer = {
       mode,
-      timing,
       playerName,
       timestamp: Date.now(),
     };
-    addNewRanking(playerScore);
+    addNewRanking(playerScore).then((response) => {
+      setPlayer((prevPlayer) => ({
+        ...prevPlayer,
+        rankingId: response.id,
+      }));
+    });
+  };
+
+  const updateNewRankingScore = (
+    id: string,
+    mode: GameMode,
+    playerName: string,
+    timing: number
+  ) => {
+    const playerScore: TopPlayer = {
+      mode,
+      playerName,
+      timing,
+      timestamp: Date.now(),
+    };
+    updateNewRanking(id, playerScore).then((response) => {
+      console.log(response);
+    });
   };
 
   return {
@@ -104,5 +125,6 @@ export function useGameActions(mode: GameMode) {
     selectPokemon,
     resetGame,
     addNewRankingScore,
+    updateNewRankingScore,
   };
 }

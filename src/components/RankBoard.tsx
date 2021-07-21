@@ -26,7 +26,7 @@ const RankBoard = () => {
           </h4>
           <TopList
             fetch={() => getTopRanking(GameMode.SPEED_MODE)}
-            mode={GameMode.SURVIVAL_MODE}
+            mode={GameMode.SPEED_MODE}
           />
         </div>
       </div>
