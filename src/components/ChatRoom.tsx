@@ -10,7 +10,7 @@ interface ChatRoomProps {
   room: string;
 }
 
-const BASE_WS_URL = "wss://pokemon-game.ldktech.com:8080";
+const BASE_WS_URL = "ws://103.130.218.255:8080";
 
 const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
   const { t } = useTranslation();
