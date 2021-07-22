@@ -1,11 +1,7 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
-import {
-  getTopRanking,
-  TopPlayer,
-  TopPlayersResponse,
-} from "../../api/ranking";
-import useAsync, { Response, ResponseStatus } from "../../hooks/useAsync";
+import { TopPlayer, TopPlayersResponse } from "../../api/ranking";
+import useAsync, { ResponseStatus } from "../../hooks/useAsync";
 import { Routes } from "../../routes/CONSTANTS";
 import { dateTimeFromTimestamp, timeConvert } from "../../utils/time";
 import { useRecoilValue } from "recoil";
@@ -30,7 +26,7 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
         (mode === GameMode.SPEED_MODE ? (
           <Link to={Routes.SPEED_MODE_PAGE}>
             <button
-              onClick={() => playPopUpOnSound()}
+              onClick={() => playPopUpOnSound && playPopUpOnSound()}
               style={{ width: "calc(100% - 32px)", margin: 16 }}
             >
               {t("Make your own ranking")}
@@ -39,7 +35,7 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
         ) : (
           <Link to={Routes.SURVIVAL_MODE_PAGE}>
             <button
-              onClick={() => playPopUpOnSound()}
+              onClick={() => playPopUpOnSound && playPopUpOnSound()}
               style={{ width: "calc(100% - 32px)", margin: 16 }}
             >
               {t("Make your own ranking")}

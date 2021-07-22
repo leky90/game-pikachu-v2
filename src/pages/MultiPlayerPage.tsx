@@ -13,7 +13,7 @@ const MultiPlayerPage = () => {
   const { playPopUpOnSound, playGlugSound } = useRecoilValue(gameSoundState);
 
   const showInDevelopment = () => {
-    playGlugSound();
+    playGlugSound && playGlugSound();
     alert(t("In development"));
   };
 
@@ -38,7 +38,7 @@ const MultiPlayerPage = () => {
               {t("Find random match")}
             </button>
             <Link to={Routes.MAIN_PAGE}>
-              <button onClick={() => playPopUpOnSound()}>
+              <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
                 {t("Main menu")}
               </button>
             </Link>

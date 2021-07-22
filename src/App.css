@@ -547,6 +547,200 @@ button:hover {
   width: 100%;
 }
 
+.toggle-sound-effect i {
+  transition: all 0.2s;
+}
+
+.icono-volumeDecrease:after,
+.icono-volumeDecrease:before,
+.icono-volumeHigh:after,
+.icono-volumeHigh:before,
+.icono-volumeIncrease:after,
+.icono-volumeIncrease:before,
+.icono-volumeLow:before,
+.icono-volumeMedium:before,
+.icono-volumeMute:after,
+.icono-volumeMute:before {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+i.icono-volumeHigh:after,
+i.icono-volumeHigh:before,
+i.icono-volumeLow:before,
+i.icono-volumeMedium:before {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  left: 2px;
+}
+
+i.icono-volumeHigh:before,
+i.icono-volumeMedium:before {
+  border-style: double;
+  border-width: 6px;
+  left: -2px;
+}
+
+.icono-volumeIncrease:after,
+.icono-volumeMute:after {
+  height: 10px;
+  width: 2px;
+  left: 21px;
+}
+
+.icono-volumeMute:after,
+.icono-volumeMute:before {
+  -webkit-transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.icono-volumeDecrease:before,
+.icono-volumeIncrease:before,
+.icono-volumeMute:before {
+  width: 10px;
+  height: 2px;
+  left: 17px;
+}
+
+.icono-volumeDecrease:after,
+.icono-volumeDecrease:before,
+.icono-volumeIncrease:after,
+.icono-volumeIncrease:before,
+.icono-volumeMute:after,
+.icono-volumeMute:before {
+  box-shadow: inset 0 0 0 32px;
+  color: rgb(2, 0, 36);
+}
+
+.icono-music:after,
+.icono-music:before {
+  box-shadow: inset 0 0 0 32px, 16px 0 0 0;
+  position: absolute;
+}
+
+.icono-music:before {
+  width: 2px;
+  height: 16px;
+  left: 0;
+  top: 4px;
+}
+
+.icono-music:after {
+  width: 10px;
+  height: 8px;
+  left: -8px;
+  top: 17px;
+  border-radius: 50%;
+}
+
+i[class*="icono-"]:after,
+i[class*="icono-"]:before {
+  content: "";
+  pointer-events: none;
+}
+
+.icono-volume,
+.icono-volumeDecrease,
+.icono-volumeHigh,
+.icono-volumeIncrease,
+.icono-volumeLow,
+.icono-volumeMedium,
+.icono-volumeMute {
+  width: 0;
+  height: 0;
+  border: 7px solid;
+  border-left: none;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  padding: 6px 3px;
+  box-shadow: inset 4px 0;
+  margin: 4px 10px 4px 11px;
+}
+
+.icono-volumeDecrease,
+.icono-volumeIncrease,
+.icono-volumeMute {
+  margin: 4px 16px 4px 5px;
+}
+
+i.icono-volumeHigh,
+i.icono-volumeMedium {
+  margin: 4px 16px 4px 5px;
+}
+
+i.icono-music {
+  width: 18px;
+  height: 6px;
+  -webkit-transform: skewY(-15deg);
+  transform: skewY(-15deg);
+  box-shadow: inset 0 0 0 32px;
+  border-radius: 2px 2px 0 0;
+  margin: 4px 5px 24px 11px;
+}
+
+i[class*="icono-"] {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  font-style: normal;
+  color: white;
+  text-align: left;
+  text-indent: -9999px;
+  direction: ltr;
+}
+
+i[class*="icono-"],
+i[class*="icono-"] * {
+  box-sizing: border-box;
+  transition: all 0.25s;
+}
+
+.toggle-sound-effect {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.toggle-music-effect {
+  position: fixed;
+  right: 64px;
+  top: 16px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+i.icono-black,
+i.icono-volumeMute {
+  color: rgb(2, 0, 36);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.service-status {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.game-theme {
+  position: fixed;
+  z-index: -100;
+}
+
 @media screen and (max-width: 1024px) {
   .app {
     padding: 0;

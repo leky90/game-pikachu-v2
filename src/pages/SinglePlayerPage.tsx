@@ -12,7 +12,7 @@ import { GameMode } from "../types/game";
 
 const SinglePlayerPage = () => {
   const { t } = useTranslation();
-  const { playPopUpOnSound } = useRecoilValue(gameSoundState);
+  const { playPopUpOnSound, playGameSong } = useRecoilValue(gameSoundState);
   const { resetGame } = useGameActions(GameMode.SURVIVAL_MODE);
 
   useEffect(() => {
@@ -34,17 +34,19 @@ const SinglePlayerPage = () => {
         </div>
         <div>
           <Link to={Routes.SURVIVAL_MODE_PAGE}>
-            <button onClick={() => playPopUpOnSound()}>
+            <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
               {t("Survival mode")}
             </button>
           </Link>
           <Link to={Routes.SPEED_MODE_PAGE}>
-            <button onClick={() => playPopUpOnSound()}>
+            <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
               {t("Speed mode")}
             </button>
           </Link>
           <Link to={Routes.MAIN_PAGE}>
-            <button onClick={() => playPopUpOnSound()}>{t("Back")}</button>
+            <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
+              {t("Back")}
+            </button>
           </Link>
         </div>
         <SwitchLanguage />

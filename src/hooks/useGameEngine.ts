@@ -5,6 +5,7 @@ import gameSoundState from "../recoil/atoms/gameSoundState";
 import gameState from "../recoil/atoms/gameState";
 import gameTimingState from "../recoil/atoms/gameTimingState";
 import playerState from "../recoil/atoms/playerState";
+import suggestTimingState from "../recoil/atoms/suggestTimingState";
 import {
   BASE_START_TIME,
   GameLevel,
@@ -24,6 +25,12 @@ import { useGameActions } from "./useGameActions";
 export default function useGameEngine(mode: GameMode) {
   const location = useLocation();
   const {
+    playFanfareSound,
+    playLevelUpSound,
+    playCompletedGameSound,
+    playYouWinSound,
+  } = useRecoilValue(gameSoundState);
+  const {
     initGame,
     replayGame,
     endGame,
@@ -33,15 +40,8 @@ export default function useGameEngine(mode: GameMode) {
   const setGame = useSetRecoilState(gameState);
   const currentPlayer = useRecoilValue(playerState);
   const setGameTiming = useSetRecoilState(gameTimingState);
-  const {
-    playFanfareSound,
-    playLevelUpSound,
-    playCompletedGameSound,
-    playYouWinSound,
-  } = useRecoilValue(gameSoundState);
   const { matrix, row, col, status, pokemons, level } =
     useRecoilValue(gameState);
-
   const shuffleMatrix = (pokemons: Record<string, Pokemon>) => {
     const newShufflePokemons = reShufflePokemonList(pokemons);
     const { pokemonMatrix, pokemons: newPokemons } = generatePokemonMatrix(
@@ -62,7 +62,7 @@ export default function useGameEngine(mode: GameMode) {
   // Setup game
   useEffect(() => {
     if (status === GameStatus.PENDING) {
-      playFanfareSound();
+      playFanfareSound && playFanfareSound();
       initGame(level);
       addNewRankingScore(mode, currentPlayer.playerName);
       if (mode === GameMode.SURVIVAL_MODE) {
@@ -97,10 +97,10 @@ export default function useGameEngine(mode: GameMode) {
       const levelUp: GameLevel = nextLevel[level];
       if (level !== levelUp || mode === GameMode.SURVIVAL_MODE) {
         initGame(levelUp);
-        playCompletedGameSound();
+        playCompletedGameSound && playCompletedGameSound();
       } else {
         if (mode === GameMode.SPEED_MODE) {
-          playYouWinSound();
+          playYouWinSound && playYouWinSound();
           setGame({
             matrix,
             row,
@@ -117,7 +117,7 @@ export default function useGameEngine(mode: GameMode) {
         hasAnyConnectLine(pokemons, matrix, row, col) === false
       ) {
         shuffleMatrix(pokemons);
-        playLevelUpSound();
+        playLevelUpSound && playLevelUpSound();
       }
     }
   }, [pokemons]);
@@ -125,7 +125,7 @@ export default function useGameEngine(mode: GameMode) {
   // Setup new game if access directly from browser
   useEffect(() => {
     if (status === GameStatus.RUNNING) {
-      playFanfareSound();
+      playFanfareSound && playFanfareSound();
       initGame(GameLevel.LEVEL_1);
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });

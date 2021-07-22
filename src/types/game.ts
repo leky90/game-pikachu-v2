@@ -1,3 +1,5 @@
+import { PlayFunction } from "use-sound/dist/types";
+
 export enum GameSelector {
   SELECTED_POKEMONS_SELECTOR = "SELECTED_POKEMONS_SELECTOR",
 }
@@ -24,23 +26,25 @@ export enum GameMode {
 
 export interface GameSound {
   soundReady: boolean;
-  playOpenMenuSound: Function;
-  playDisableSound: Function;
-  playEnableSound: Function;
-  playCompletedGameSound: Function;
-  playFailedGameSound: Function;
-  playBiteSound: Function;
-  playOnSound: Function;
-  playOffSound: Function;
-  playGlugSound: Function;
-  playFanfareSound: Function;
-  playRisingPopSound: Function;
-  playNearlyEndTimeSound: Function;
-  playLevelUpSound: Function;
-  playPopUpOnSound: Function;
-  playPopUpOffSound: Function;
-  playPopDownSound: Function;
-  playYouWinSound: Function;
+  gameSongDuration: number;
+  playOpenMenuSound?: PlayFunction;
+  playDisableSound?: PlayFunction;
+  playEnableSound?: PlayFunction;
+  playCompletedGameSound?: PlayFunction;
+  playFailedGameSound?: PlayFunction;
+  playBiteSound?: PlayFunction;
+  playOnSound?: PlayFunction;
+  playOffSound?: PlayFunction;
+  playGlugSound?: PlayFunction;
+  playFanfareSound?: PlayFunction;
+  playRisingPopSound?: PlayFunction;
+  playNearlyEndTimeSound?: PlayFunction;
+  playLevelUpSound?: PlayFunction;
+  playPopUpOnSound?: PlayFunction;
+  playPopUpOffSound?: PlayFunction;
+  playPopDownSound?: PlayFunction;
+  playYouWinSound?: PlayFunction;
+  playGameSong?: PlayFunction;
 }
 
 export enum GameTypeState {
@@ -49,6 +53,7 @@ export enum GameTypeState {
   GAME_SOUND_STATE = "GAME_SOUND_STATE",
   GAME_TIMING_STATE = "GAME_TIMING_STATE",
   GAME_OVERLAY_STATE = "GAME_OVERLAY_STATE",
+  GAME_SUGGEST_TIMING_STATE = "GAME_SUGGEST_TIMING_STATE",
   SELECTED_POKEMONS = "SELECTED_POKEMONS",
 }
 
@@ -193,7 +198,7 @@ export const nextLevel = {
   [GameLevel.LEVEL_11]: GameLevel.LEVEL_12,
   [GameLevel.LEVEL_12]: GameLevel.LEVEL_13,
   [GameLevel.LEVEL_13]: GameLevel.LEVEL_14,
-  [GameLevel.LEVEL_14]: GameLevel.LEVEL_14,
+  [GameLevel.LEVEL_14]: GameLevel.LEVEL_9,
 };
 
 export const BASE_START_TIME = 300;

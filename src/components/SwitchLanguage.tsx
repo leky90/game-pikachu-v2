@@ -11,7 +11,7 @@ const SwitchLanguage = () => {
   const changeLanguage = (lng: "en" | "vi") => {
     i18n.changeLanguage(lng);
     setStorageValue(lng);
-    playOffSound();
+    playOffSound && playOffSound();
   };
 
   return (

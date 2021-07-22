@@ -1,11 +1,11 @@
 import "./App.css";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import { Routes } from "./routes/CONSTANTS";
 import SinglePlayerPage from "./pages/SinglePlayerPage";
 import MultiPlayerPage from "./pages/MultiPlayerPage";
 import SpeedModePage from "./pages/SpeedModePage";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import gameSoundState from "./recoil/atoms/gameSoundState";
 import { useTranslation } from "react-i18next";
 import i18n from "./services/i18n";
@@ -14,6 +14,8 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import SurvivalModePage from "./pages/SurvivalModePage";
 import playerState from "./recoil/atoms/playerState";
 import PlayerPage from "./pages/PlayerPage";
+import ToggleSound from "./components/ToggleSound";
+import ToggleMusic from "./components/ToggleMusic";
 
 function App() {
   const { t } = useTranslation();
@@ -49,6 +51,12 @@ function App() {
 
   return (
     <div className="app">
+      {soundReady && (
+        <>
+          <ToggleMusic />
+          <ToggleSound />
+        </>
+      )}
       {!soundReady && <h1>{t("Preparing resource...")}</h1>}
       {soundReady && (
         <Switch>

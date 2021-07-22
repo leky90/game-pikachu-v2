@@ -10,7 +10,6 @@ interface MessageProps {
 const Message: FC<MessageProps> = ({ message }) => {
   const { playerName } = useRecoilValue(playerState);
   try {
-    console.log(message);
     const { name, content, timestamp } = JSON.parse(message);
     const selfClass = playerName === name ? "self" : "";
     return (

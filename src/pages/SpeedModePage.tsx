@@ -38,7 +38,9 @@ const SpeedModePage = () => {
           </blockquote>
         </div>
         <Link to={Routes.SINGLE_PLAYER_PAGE}>
-          <button onClick={() => playPopUpOnSound()}>{t("Back")}</button>
+          <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
+            {t("Back")}
+          </button>
         </Link>
         <p className="mobile-helper">{t("Scroll down to play")}</p>
         <SwitchLanguage />

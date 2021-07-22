@@ -23,12 +23,12 @@ const MainPage = () => {
           {t("Welcome")}, {playerName}
         </h3>
         <Link to={Routes.SINGLE_PLAYER_PAGE}>
-          <button onClick={() => playPopUpOnSound()}>
+          <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
             {t("Single player")}
           </button>
         </Link>
         <Link to={Routes.MULTI_PLAYER_PAGE}>
-          <button onClick={() => playPopUpOnSound()}>
+          <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
             {t("Multi player")}
           </button>
         </Link>

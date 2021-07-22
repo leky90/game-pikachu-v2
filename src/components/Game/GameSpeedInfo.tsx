@@ -4,15 +4,18 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 import gameState from "../../recoil/atoms/gameState";
 import gameTimingState from "../../recoil/atoms/gameTimingState";
+import suggestTimingState from "../../recoil/atoms/suggestTimingState";
 import playerState from "../../recoil/atoms/playerState";
 import { GameMode, GameStatus } from "../../types/game";
 import { timeConvert } from "../../utils/time";
 import { useGameActions } from "../../hooks/useGameActions";
+import { hasAnyConnectLine } from "../../utils/game";
 
 const GameSpeedInfo = () => {
   const { t } = useTranslation();
   const { level, status } = useRecoilValue(gameState);
   const [gameTiming, setGameTiming] = useRecoilState(gameTimingState);
+  const [suggestTiming, setSuggestTiming] = useRecoilState(suggestTimingState);
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
   const { timing } = gameTiming;
   const { replayGame } = useGameActions(GameMode.SPEED_MODE);
@@ -21,10 +24,15 @@ const GameSpeedInfo = () => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
 
     if (status === GameStatus.RUNNING) {
+      if (suggestTiming >= 15) {
+        setSuggestTiming(0);
+      }
+
       timeoutId = setTimeout(() => {
         setGameTiming({
           timing: timing + 1,
         });
+        setSuggestTiming(suggestTiming + 1);
       }, 1000);
     }
     if (status === GameStatus.COMPLETED) {

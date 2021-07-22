@@ -43,7 +43,9 @@ const PlayerPage = () => {
             autoFocus
             placeholder={t("Enter your name here")}
             maxLength={20}
+            autoComplete="off"
           />
+          <button>{t("Submit")}</button>
         </form>
         <SwitchLanguage />
       </div>

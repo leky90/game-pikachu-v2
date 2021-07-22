@@ -18,6 +18,9 @@ import popDownSound from "../assets/sound/pop-down.mp3";
 import popUpOnSound from "../assets/sound/pop-up-on.mp3";
 import popUpOffSound from "../assets/sound/pop-up-off.mp3";
 import youWinSound from "../assets/sound/you-win.mp3";
+import gameSongSound from "../assets/sound/game-song.mp3";
+import { useRecoilValue } from "recoil";
+import toggleSoundState from "../recoil/atoms/toggleSoundState";
 
 export enum Sound {
   MENU_OPEN = "MENU_OPEN",
@@ -37,6 +40,7 @@ export enum Sound {
   POP_UP_ON = "POP_UP_ON",
   POP_UP_OFF = "POP_UP_OFF",
   YOU_WIN = "YOU_WIN",
+  GAME_SONG = "GAME_SONG",
 }
 
 interface SoundOptions {
@@ -50,9 +54,10 @@ interface SoundOptions {
 }
 
 export default function usePlaySound(sound?: Sound) {
+  const { music, effect } = useRecoilValue(toggleSoundState);
   const defaultConfigSound: SoundOptions = {
     interrupt: true,
-    // volume: 1,
+    volume: effect,
   };
   let soundPath = menuOpenSound;
   if (sound) {
@@ -105,6 +110,10 @@ export default function usePlaySound(sound?: Sound) {
       case Sound.YOU_WIN:
         soundPath = youWinSound;
         break;
+      case Sound.GAME_SONG:
+        soundPath = gameSongSound;
+        // defaultConfigSound.volume = music;
+        break;
       default:
         soundPath = menuOpenSound;
         break;
@@ -122,5 +131,7 @@ export default function usePlaySound(sound?: Sound) {
     stopSound,
     pauseSound,
     duration,
+    music,
+    effect,
   };
 }

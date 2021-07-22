@@ -33,7 +33,7 @@ export function useGameActions(mode: GameMode) {
     rowIndex: number,
     colIndex: number
   ) => {
-    playBiteSound();
+    playBiteSound && playBiteSound();
     setSelectedPokemons({ nid: pokemonId, rowIndex, colIndex });
   };
 
@@ -66,7 +66,7 @@ export function useGameActions(mode: GameMode) {
   );
 
   const replayGame = (playerName: string) => {
-    playFanfareSound();
+    playFanfareSound && playFanfareSound();
     initGame(GameLevel.LEVEL_1);
     addNewRankingScore(mode, playerName);
     if (mode === GameMode.SURVIVAL_MODE) {
@@ -79,7 +79,7 @@ export function useGameActions(mode: GameMode) {
 
   const endGame = () => {
     if (mode === GameMode.SURVIVAL_MODE) {
-      playNearlyEndTimeSound();
+      playNearlyEndTimeSound && playNearlyEndTimeSound();
       setGame((prevGame) => ({
         ...prevGame,
         status: GameStatus.COMPLETED,
@@ -113,9 +113,7 @@ export function useGameActions(mode: GameMode) {
       timing,
       timestamp: Date.now(),
     };
-    updateNewRanking(id, playerScore).then((response) => {
-      console.log(response);
-    });
+    updateNewRanking(id, playerScore);
   };
 
   return {

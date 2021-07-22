@@ -14,7 +14,7 @@ export default function useGameOverlayEngine(mode: GameMode) {
 
   useEffect(() => {
     if (connectingLinePoints.length === 1) {
-      playGlugSound();
+      playGlugSound && playGlugSound();
       if (mode === GameMode.SPEED_MODE) {
         setGameTiming((gameTiming) => ({
           timing: gameTiming.timing + PENALTY_TIME,
@@ -28,7 +28,7 @@ export default function useGameOverlayEngine(mode: GameMode) {
       }
     }
     if (connectingLinePoints.length > 1) {
-      playRisingPopSound();
+      playRisingPopSound && playRisingPopSound();
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming((gameTiming) => ({
           ...gameTiming,

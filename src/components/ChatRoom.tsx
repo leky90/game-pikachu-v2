@@ -2,25 +2,42 @@ import { FC, FormEventHandler, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import gameSoundState from "../recoil/atoms/gameSoundState";
 import messagesState from "../recoil/atoms/messagesState";
 import playerState from "../recoil/atoms/playerState";
+import ChatBox from "./Chat/ChatBox";
 import MessagesBox from "./Chat/MessagesBox";
 
 interface ChatRoomProps {
   room: string;
 }
 
-const BASE_WS_URL = "ws://103.130.218.255:8080";
+// const BASE_WS_URL = "wss://pokemon-game.ldktech.com/websocket";
+const BASE_WS_URL = "ws://localhost:8080";
 
 const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
   const { t } = useTranslation();
   const { playerName } = useRecoilValue(playerState);
+  const { playPopUpOffSound } = useRecoilValue(gameSoundState);
   const setMessagesState = useSetRecoilState(messagesState);
-  const [socketUrl, setSocketUrl] = useState(
-    `${BASE_WS_URL}/chat?username=${playerName}`
-  );
+  const [socketUrl] = useState(`${BASE_WS_URL}/chat`);
   const { sendJsonMessage, readyState, lastJsonMessage, lastMessage } =
-    useWebSocket(socketUrl);
+    useWebSocket(socketUrl, {
+      reconnectAttempts: 10,
+      reconnectInterval: 3000,
+      retryOnError: true,
+      shouldReconnect: () => true,
+      queryParams: {
+        username: playerName,
+      },
+      onMessage: (event) => {
+        playPopUpOffSound && playPopUpOffSound();
+      },
+    });
+
+  const reTryConnectSocket = () => {
+    window.location.reload();
+  };
 
   useEffect(() => {
     lastJsonMessage &&
@@ -37,6 +54,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
       content: message,
       timestamp: Date.now(),
     };
+    // playPopUpOnSound();
     sendJsonMessage(messageJson);
   }, []);
 
@@ -45,7 +63,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
     const inputMessage = event.currentTarget.message;
     inputMessage.setAttribute("disabled", "true");
     const message = inputMessage.value.replace(
-      /\b(dit|du|fuck|cu|dcm|dm|dcm)\b/g,
+      /\b(dit|du|fuck|cu|dcm|dm|dcm|cat)\b/g,
       "*"
     );
     if (message && message.trim() !== "") {
@@ -64,16 +82,16 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
         {readyState === ReadyState.OPEN && (
           <>
             <MessagesBox />
-            <div className="chat-box">
-              <form onSubmit={handleSubmit}>
-                <input
-                  name="message"
-                  placeholder={t("Enter your message here...")}
-                  autoFocus
-                />
-              </form>
-            </div>
+            <ChatBox handleSubmit={handleSubmit} />
           </>
+        )}
+        {readyState === ReadyState.CLOSED && (
+          <div className="service-status">
+            {t("Service is not available now.")}
+            <strong className="clickable" onClick={reTryConnectSocket}>
+              {t("Please try again")}
+            </strong>
+          </div>
         )}
       </div>
     </div>
