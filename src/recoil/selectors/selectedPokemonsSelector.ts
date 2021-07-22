@@ -4,7 +4,6 @@ import { checkConnectionSelectedPokemons } from "../../utils/game";
 import gameState from "../atoms/gameState";
 import gameOverlayState from "../atoms/gameOverlayState";
 import selectedPokemonsState from "../atoms/selectedPokemonsState";
-import suggestTimingState from "../atoms/suggestTimingState";
 
 const selectedPokemonsSelector = selector({
   key: GameSelector.SELECTED_POKEMONS_SELECTOR,
@@ -17,7 +16,6 @@ const selectedPokemonsSelector = selector({
     const selectedPokemons = get(selectedPokemonsState);
 
     const cloneSelectedPokemons = [...selectedPokemons];
-
     cloneSelectedPokemons.push(newValue as PokemonCoords);
 
     const {
@@ -43,7 +41,6 @@ const selectedPokemonsSelector = selector({
           matrix: newMatrix,
           pokemons: newPokemons,
         });
-        set(suggestTimingState, 0);
       }
       set(gameOverlayState, {
         connectingLinePoints,

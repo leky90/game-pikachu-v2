@@ -28,7 +28,7 @@ const SpeedModePage = () => {
         <GameBoard mode={GameMode.SPEED_MODE} />
       </div>
       <div className="sidebar">
-        <GameSpeedInfo />
+        <GameSpeedInfo hasTiming />
         <div>
           <blockquote className="game-helper">
             {t("Please complete all levels as fast as you can")}

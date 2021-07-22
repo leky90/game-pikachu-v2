@@ -28,7 +28,7 @@ const SurvivalModePage = () => {
         <GameBoard mode={GameMode.SURVIVAL_MODE} />
       </div>
       <div className="sidebar">
-        <GameSurvivalInfo />
+        <GameSurvivalInfo hasTiming />
         <div>
           <blockquote className="game-helper">
             {t("Try your best not to run out of time as long as possible")}

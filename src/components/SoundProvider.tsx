@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import BiteSound from "./Sound/BiteSound";
 import CompletedGameSound from "./Sound/CompletedGameSound";
 import OpenMenuSound from "./Sound/OpenMenuSound";
@@ -17,6 +17,7 @@ import PopUpOnSound from "./Sound/PopUpOnSound";
 import YouWinSound from "./Sound/YouWinSound";
 import RisingPopSound from "./Sound/RisingPopSound";
 import YoutubeThemeSong from "./Sound/YoutubeThemeSong";
+import GlugSound from "./Sound/GlugSound";
 
 const SoundProvider: FC = ({ children }) => {
   return (
@@ -39,6 +40,7 @@ const SoundProvider: FC = ({ children }) => {
       <PopUpOnSound />
       <RisingPopSound />
       <YouWinSound />
+      <GlugSound />
       {children}
     </>
   );

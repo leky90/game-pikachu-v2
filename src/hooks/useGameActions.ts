@@ -5,22 +5,15 @@ import selectedPokemonsState from "../recoil/atoms/selectedPokemonsState";
 import gameOverlayState from "../recoil/atoms/gameOverlayState";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import { useCallback } from "react";
-import {
-  BASE_START_TIME,
-  GameLevel,
-  GameMode,
-  gameOptions,
-  GameStatus,
-} from "../types/game";
+import { GameLevel, GameMode, gameOptions, GameStatus } from "../types/game";
 import { generatePokemonMatrix, makeListPokemons } from "../utils/game";
-import gameTimingState from "../recoil/atoms/gameTimingState";
 import { addNewRanking, TopPlayer, updateNewRanking } from "../api/ranking";
 import playerState from "../recoil/atoms/playerState";
+import { nanoid } from "nanoid";
 
 export function useGameActions(mode: GameMode) {
   const setGame = useSetRecoilState(gameState);
   const setPlayer = useSetRecoilState(playerState);
-  const setGameTiming = useSetRecoilState(gameTimingState);
   const setSelectedPokemons = useSetRecoilState(selectedPokemonsSelector);
   const resetGameState = useResetRecoilState(gameState);
   const resetGameOverlayState = useResetRecoilState(gameOverlayState);
@@ -58,9 +51,9 @@ export function useGameActions(mode: GameMode) {
         level,
         row,
         col,
-        status: GameStatus.RUNNING,
+        status: GameStatus.PENDING,
       });
-      setPlayer((currentPlayer) => ({ ...currentPlayer, playerTiming: 0 }));
+      // setPlayer((currentPlayer) => ({ ...currentPlayer, playerTiming: 0 }));
     },
     [setGame]
   );
@@ -68,13 +61,7 @@ export function useGameActions(mode: GameMode) {
   const replayGame = (playerName: string) => {
     // playFanfareSound && playFanfareSound();
     initGame(GameLevel.LEVEL_1);
-    addNewRankingScore(mode, playerName);
-    if (mode === GameMode.SURVIVAL_MODE) {
-      setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
-    }
-    if (mode === GameMode.SPEED_MODE) {
-      setGameTiming({ timing: 0 });
-    }
+    // addNewRankingScore(mode, playerName);
   };
 
   const endGame = () => {
@@ -96,7 +83,7 @@ export function useGameActions(mode: GameMode) {
     addNewRanking(playerScore).then((response) => {
       setPlayer((prevPlayer) => ({
         ...prevPlayer,
-        rankingId: response.id,
+        rankingId: response.id ?? nanoid(),
       }));
     });
   };
@@ -116,9 +103,17 @@ export function useGameActions(mode: GameMode) {
     updateNewRanking(id, playerScore);
   };
 
+  const startGame = () => {
+    setGame((prevGame) => ({
+      ...prevGame,
+      status: GameStatus.RUNNING,
+    }));
+  };
+
   return {
     initGame,
     replayGame,
+    startGame,
     endGame,
     selectPokemon,
     resetGame,
