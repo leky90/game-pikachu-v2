@@ -62,7 +62,7 @@ export default function useGameEngine(mode: GameMode) {
   // Setup game
   useEffect(() => {
     if (status === GameStatus.PENDING) {
-      playFanfareSound && playFanfareSound();
+      // playFanfareSound && playFanfareSound();
       initGame(level);
       addNewRankingScore(mode, currentPlayer.playerName);
       if (mode === GameMode.SURVIVAL_MODE) {
@@ -125,7 +125,7 @@ export default function useGameEngine(mode: GameMode) {
   // Setup new game if access directly from browser
   useEffect(() => {
     if (status === GameStatus.RUNNING) {
-      playFanfareSound && playFanfareSound();
+      // playFanfareSound && playFanfareSound();
       initGame(GameLevel.LEVEL_1);
       if (mode === GameMode.SURVIVAL_MODE) {
         setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });

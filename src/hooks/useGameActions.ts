@@ -66,7 +66,7 @@ export function useGameActions(mode: GameMode) {
   );
 
   const replayGame = (playerName: string) => {
-    playFanfareSound && playFanfareSound();
+    // playFanfareSound && playFanfareSound();
     initGame(GameLevel.LEVEL_1);
     addNewRankingScore(mode, playerName);
     if (mode === GameMode.SURVIVAL_MODE) {
