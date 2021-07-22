@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/game-pikachu-v2/build/static/css/main.897e618d.chunk.css",
-    "main.js": "/game-pikachu-v2/build/static/js/main.04dc917c.chunk.js",
-    "main.js.map": "/game-pikachu-v2/build/static/js/main.04dc917c.chunk.js.map",
+    "main.js": "/game-pikachu-v2/build/static/js/main.88fd96ac.chunk.js",
+    "main.js.map": "/game-pikachu-v2/build/static/js/main.88fd96ac.chunk.js.map",
     "runtime-main.js": "/game-pikachu-v2/build/static/js/runtime-main.01e0f4c8.js",
     "runtime-main.js.map": "/game-pikachu-v2/build/static/js/runtime-main.01e0f4c8.js.map",
     "static/js/2.ce1bf12e.chunk.js": "/game-pikachu-v2/build/static/js/2.ce1bf12e.chunk.js",
@@ -39,6 +39,6 @@
     "static/js/runtime-main.01e0f4c8.js",
     "static/js/2.ce1bf12e.chunk.js",
     "static/css/main.897e618d.chunk.css",
-    "static/js/main.04dc917c.chunk.js"
+    "static/js/main.88fd96ac.chunk.js"
   ]
 }
