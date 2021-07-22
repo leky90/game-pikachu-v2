@@ -96,7 +96,7 @@ export default function useGameEngine(mode: GameMode) {
     if (checkCompletedLevel(pokemons)) {
       const levelUp: GameLevel = nextLevel[level];
       if (level !== levelUp || mode === GameMode.SURVIVAL_MODE) {
-        initGame(levelUp);
+        initGame(levelUp, GameStatus.RUNNING);
         playCompletedGameSound && playCompletedGameSound();
       } else {
         if (mode === GameMode.SPEED_MODE) {

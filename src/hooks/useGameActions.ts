@@ -37,7 +37,7 @@ export function useGameActions(mode: GameMode) {
   };
 
   const initGame = useCallback(
-    (level: GameLevel) => {
+    (level: GameLevel, status: GameStatus = GameStatus.PENDING) => {
       const { row, col } = gameOptions[level];
       const pokemons = makeListPokemons(row, col);
       const { pokemonMatrix, pokemons: newPokemons } = generatePokemonMatrix(
@@ -51,7 +51,7 @@ export function useGameActions(mode: GameMode) {
         level,
         row,
         col,
-        status: GameStatus.PENDING,
+        status,
       });
       // setPlayer((currentPlayer) => ({ ...currentPlayer, playerTiming: 0 }));
     },
