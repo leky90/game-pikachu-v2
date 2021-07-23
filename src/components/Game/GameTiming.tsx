@@ -3,7 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import gameState from "../../recoil/atoms/gameState";
 import playerState from "../../recoil/atoms/playerState";
-import { GameMode, GameStatus, PENALTY_TIME } from "../../types/game";
+import {
+  GameMode,
+  GameStatus,
+  PENALTY_TIME,
+  PENDING_TIME,
+} from "../../types/game";
 import { timeConvert } from "../../utils/time";
 import gameOverlayState from "../../recoil/atoms/gameOverlayState";
 import gameSoundState from "../../recoil/atoms/gameSoundState";
@@ -17,6 +22,7 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
   const { connectingLinePoints } = useRecoilValue(gameOverlayState);
   const [timingState, setTimingState] = useState(0);
   const timing = useRef(0);
+  const pendingTiming = useRef(PENDING_TIME);
   const { startGame } = useGameActions(GameMode.SPEED_MODE);
 
   // count timing when running, stop when completed
@@ -36,19 +42,45 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
         clearTimeout(timeoutId);
       }
     }
+
+    return () => {
+      timeoutId && clearTimeout(timeoutId);
+    };
   }, [status, timingState]);
 
   useEffect(() => {
-    if (status === GameStatus.PENDING && hasTiming) {
+    let intervalId: NodeJS.Timeout | undefined = undefined;
+    if (status === GameStatus.PENDING) {
       timing.current = 0;
-      setTimeout(() => {
-        startGame();
-      }, 3000);
+      pendingTiming.current = PENDING_TIME;
+      const countdownEl = document.getElementById("count-down-pending-timing");
+      if (countdownEl) countdownEl.innerText = pendingTiming.current.toString();
+      intervalId = setInterval(() => {
+        if (pendingTiming.current <= 1) {
+          intervalId && clearInterval(intervalId);
+          pendingTiming.current = PENDING_TIME;
+          startGame();
+        } else {
+          pendingTiming.current--;
+        }
+        const countdownEl = document.getElementById(
+          "count-down-pending-timing"
+        );
+        if (countdownEl)
+          countdownEl.innerText = pendingTiming.current.toString();
+      }, 1000);
     }
 
     if (status === GameStatus.COMPLETED) {
-      setPlayer({ ...currentPlayer, playerTiming: timing.current });
+      intervalId && clearInterval(intervalId);
+      if (hasTiming) {
+        setPlayer({ ...currentPlayer, playerTiming: timing.current });
+      }
     }
+    return () => {
+      pendingTiming.current = PENDING_TIME;
+      intervalId && clearInterval(intervalId);
+    };
   }, [status]);
 
   // check rule time
@@ -62,10 +94,23 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
     }
   }, [connectingLinePoints]);
 
+  console.log(status, pendingTiming.current);
+
   return (
-    <p className="text-center">
-      {t("Your time")}: {timeConvert(timing.current)}
-    </p>
+    <>
+      {!hasTiming && (
+        <div
+          key="count-down"
+          id="count-down-pending-timing"
+          className="overlay-pending-timing"
+        >
+          {pendingTiming.current}
+        </div>
+      )}
+      <p className="text-center">
+        {t("Your time")}: {timeConvert(timing.current)}
+      </p>
+    </>
   );
 };
 

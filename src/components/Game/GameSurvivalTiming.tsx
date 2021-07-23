@@ -12,6 +12,7 @@ import {
   GameMode,
   GameStatus,
   PENALTY_TIME,
+  PENDING_TIME,
 } from "../../types/game";
 import { timeConvert } from "../../utils/time";
 
@@ -24,6 +25,7 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
   const [timingState, setTimingState] = useState(0);
   const timing = useRef(0);
   const remainTiming = useRef(BASE_START_TIME);
+  const pendingTiming = useRef(PENDING_TIME);
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
   const { endGame, startGame } = useGameActions(GameMode.SURVIVAL_MODE);
   const { connectingLinePoints } = useRecoilValue(gameOverlayState);
@@ -35,9 +37,6 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
     if (status === GameStatus.PENDING && hasTiming) {
       timing.current = 0;
       remainTiming.current = BASE_START_TIME;
-      setTimeout(() => {
-        startGame();
-      }, 3000);
     }
 
     if (status === GameStatus.RUNNING) {
@@ -57,11 +56,44 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
     // update timing to make score
     if (status === GameStatus.COMPLETED) {
       if (timeoutId) clearTimeout(timeoutId);
+    }
+    return () => {
+      timeoutId && clearTimeout(timeoutId);
+    };
+  }, [status, timingState]);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | undefined = undefined;
+    if (status === GameStatus.PENDING) {
+      timing.current = 0;
+      pendingTiming.current = PENDING_TIME;
+      intervalId = setInterval(() => {
+        const countdownEl = document.getElementById(
+          "count-down-pending-timing"
+        );
+        if (countdownEl)
+          countdownEl.innerText = pendingTiming.current.toString();
+        if (pendingTiming.current <= 1) {
+          intervalId && clearInterval(intervalId);
+          pendingTiming.current = PENDING_TIME;
+          startGame();
+        } else {
+          pendingTiming.current--;
+        }
+      }, 1000);
+    }
+
+    if (status === GameStatus.COMPLETED) {
+      intervalId && clearInterval(intervalId);
       if (hasTiming) {
         setPlayer({ ...currentPlayer, playerTiming: timing.current });
       }
     }
-  }, [status, timingState]);
+    return () => {
+      pendingTiming.current = PENDING_TIME;
+      intervalId && clearInterval(intervalId);
+    };
+  }, [status]);
 
   // check rule time
   useEffect(() => {
@@ -77,6 +109,11 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
 
   return (
     <>
+      {!hasTiming && (
+        <div id="count-down-pending-timing" className="overlay-pending-timing">
+          {pendingTiming.current}
+        </div>
+      )}
       <p className="text-center">
         {t("Your time")}: {timeConvert(timing.current)}
       </p>

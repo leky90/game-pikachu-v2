@@ -205,3 +205,4 @@ export const BASE_START_TIME = 300;
 export const SUGGEST_TIME = 5;
 export const BONUS_TIME = 2;
 export const PENALTY_TIME = 5;
+export const PENDING_TIME = 3;

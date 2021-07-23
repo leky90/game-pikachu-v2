@@ -248,11 +248,39 @@ button:hover {
 
 .game-board .game-info {
   position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* top: 30px; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  /* display: none; */
+  z-index: 9000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.game-board.game-pending .game-info * {
   display: none;
-  z-index: 1000;
+}
+
+.game-board.game-pending .game-info #count-down-pending-timing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.game-board.game-running .game-info {
+  display: none;
 }
 
 .game-board {
@@ -278,14 +306,7 @@ button:hover {
 }
 
 .game-completed .game-info {
-  width: 100%;
-  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  top: 50%;
-  z-index: 10000;
-  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .game-completed .game-score {
