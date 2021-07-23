@@ -310,6 +310,10 @@ button:hover {
   display: flex;
 }
 
+.game-completed .overlay-pending-timing {
+  display: none;
+}
+
 .game-completed .game-score {
   text-align: center;
   color: #fff;
