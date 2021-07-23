@@ -13,22 +13,26 @@ import {
   GameStatus,
   PENALTY_TIME,
   PENDING_TIME,
+  SUGGEST_TIME,
 } from "../../types/game";
+import { hasAnyConnectLine } from "../../utils/game";
 import { timeConvert } from "../../utils/time";
 
 const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
   hasTiming = false,
 }) => {
   const { t } = useTranslation();
-  const { status } = useRecoilValue(gameState);
+  const { status, pokemons, matrix, row, col } = useRecoilValue(gameState);
   const { playRisingPopSound, playGlugSound } = useRecoilValue(gameSoundState);
   const [timingState, setTimingState] = useState(0);
   const timing = useRef(0);
   const remainTiming = useRef(BASE_START_TIME);
   const pendingTiming = useRef(PENDING_TIME);
+  const suggestTiming = useRef(0);
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
   const { endGame, startGame } = useGameActions(GameMode.SURVIVAL_MODE);
-  const { connectingLinePoints } = useRecoilValue(gameOverlayState);
+  const [{ connectingLinePoints }, setGameOverlay] =
+    useRecoilState(gameOverlayState);
 
   // count timing when running, stop when completed
   useEffect(() => {
@@ -40,6 +44,23 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
     }
 
     if (status === GameStatus.RUNNING) {
+      if (hasTiming) {
+        if (suggestTiming.current >= SUGGEST_TIME) {
+          const { foundConnectLine, fromPoint, toPoint } = hasAnyConnectLine(
+            pokemons,
+            matrix,
+            row,
+            col
+          );
+          if (foundConnectLine) {
+            setGameOverlay((gameOverlay) => ({
+              ...gameOverlay,
+              suggestPoints: [fromPoint, toPoint],
+            }));
+          }
+          suggestTiming.current = 0;
+        }
+      }
       if (remainTiming.current <= 0) {
         if (hasTiming) {
           endGame();
@@ -47,6 +68,7 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
       } else {
         timeoutId = setTimeout(() => {
           timing.current++;
+          suggestTiming.current++;
           remainTiming.current--;
           setTimingState(timingState + 1);
         }, 1000);
@@ -65,6 +87,12 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined = undefined;
     if (status === GameStatus.PENDING) {
+      if (hasTiming) {
+        setGameOverlay((gameOverlay) => ({
+          ...gameOverlay,
+          suggestPoints: [undefined, undefined],
+        }));
+      }
       timing.current = 0;
       pendingTiming.current = PENDING_TIME;
       const countdownEl = document.getElementById("count-down-pending-timing");

@@ -33,9 +33,12 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
 
+    if (status === GameStatus.PENDING && hasTiming) {
+      timing.current = 0;
+    }
+
     if (status === GameStatus.RUNNING) {
       if (hasTiming) {
-        console.log(suggestTiming.current);
         if (suggestTiming.current >= SUGGEST_TIME) {
           const { foundConnectLine, fromPoint, toPoint } = hasAnyConnectLine(
             pokemons,
@@ -74,6 +77,13 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined = undefined;
     if (status === GameStatus.PENDING) {
+      if (hasTiming) {
+        setGameOverlay((gameOverlay) => ({
+          ...gameOverlay,
+          suggestPoints: [undefined, undefined],
+        }));
+      }
+
       timing.current = 0;
       pendingTiming.current = PENDING_TIME;
       const countdownEl = document.getElementById("count-down-pending-timing");

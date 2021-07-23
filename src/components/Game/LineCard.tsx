@@ -18,7 +18,7 @@ const LineCard: FC<LineCardProps> = ({
   const direction =
     point && point.direction ? `${point.direction}-direction` : "";
   const pointClass = point ? `in-line ${direction} ${type}` : "";
-  const suggestedClass = suggested ? `suggested` : "";
+  const suggestedClass = suggested ? `suggested` : pointClass;
   const lineRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setTimeout(() => {
@@ -31,7 +31,7 @@ const LineCard: FC<LineCardProps> = ({
   }, [lineRef, direction, type]);
 
   return (
-    <div ref={lineRef} className={`line-card ${pointClass} ${suggestedClass}`}>
+    <div ref={lineRef} className={`line-card ${suggestedClass}`}>
       <strong>
         {rowIndex},{colIndex}
       </strong>
@@ -41,7 +41,7 @@ const LineCard: FC<LineCardProps> = ({
 
 function propsAreEquals(prevProps: LineCardProps, nextProps: LineCardProps) {
   if (prevProps.point === undefined && nextProps.point === undefined) {
-    return !nextProps.suggested;
+    return prevProps.suggested === nextProps.suggested;
   }
 
   return (
