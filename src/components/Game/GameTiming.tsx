@@ -8,20 +8,24 @@ import {
   GameStatus,
   PENALTY_TIME,
   PENDING_TIME,
+  SUGGEST_TIME,
 } from "../../types/game";
 import { timeConvert } from "../../utils/time";
 import gameOverlayState from "../../recoil/atoms/gameOverlayState";
 import gameSoundState from "../../recoil/atoms/gameSoundState";
 import { useGameActions } from "../../hooks/useGameActions";
+import { hasAnyConnectLine } from "../../utils/game";
 
 const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
   const { t } = useTranslation();
-  const { status } = useRecoilValue(gameState);
+  const { status, pokemons, matrix, row, col } = useRecoilValue(gameState);
   const { playRisingPopSound, playGlugSound } = useRecoilValue(gameSoundState);
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
-  const { connectingLinePoints } = useRecoilValue(gameOverlayState);
+  const [{ connectingLinePoints }, setGameOverlay] =
+    useRecoilState(gameOverlayState);
   const [timingState, setTimingState] = useState(0);
   const timing = useRef(0);
+  const suggestTiming = useRef(0);
   const pendingTiming = useRef(PENDING_TIME);
   const { startGame } = useGameActions(GameMode.SPEED_MODE);
 
@@ -30,8 +34,27 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
     let timeoutId: NodeJS.Timeout | undefined = undefined;
 
     if (status === GameStatus.RUNNING) {
+      if (hasTiming) {
+        console.log(suggestTiming.current);
+        if (suggestTiming.current >= SUGGEST_TIME) {
+          const { foundConnectLine, fromPoint, toPoint } = hasAnyConnectLine(
+            pokemons,
+            matrix,
+            row,
+            col
+          );
+          if (foundConnectLine) {
+            setGameOverlay((gameOverlay) => ({
+              ...gameOverlay,
+              suggestPoints: [fromPoint, toPoint],
+            }));
+          }
+          suggestTiming.current = 0;
+        }
+      }
       timeoutId = setTimeout(() => {
         timing.current++;
+        suggestTiming.current++;
         setTimingState(timingState + 1);
       }, 1000);
     }
@@ -74,10 +97,12 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
     if (status === GameStatus.COMPLETED) {
       intervalId && clearInterval(intervalId);
       if (hasTiming) {
+        suggestTiming.current = 0;
         setPlayer({ ...currentPlayer, playerTiming: timing.current });
       }
     }
     return () => {
+      suggestTiming.current = 0;
       pendingTiming.current = PENDING_TIME;
       intervalId && clearInterval(intervalId);
     };
@@ -90,6 +115,7 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
       timing.current += PENALTY_TIME;
     }
     if (connectingLinePoints.length > 1) {
+      suggestTiming.current = 0;
       playRisingPopSound && playRisingPopSound();
     }
   }, [connectingLinePoints]);

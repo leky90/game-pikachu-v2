@@ -4,7 +4,7 @@ import toggleSoundState from "../recoil/atoms/toggleSoundState";
 
 const ToggleSound = () => {
   const [sound, toggleSound] = useRecoilState(toggleSoundState);
-  const { playDisableSound, playEnableSound } = useRecoilValue(gameSoundState);
+  const { playDisableSound } = useRecoilValue(gameSoundState);
   const classSound = sound.effect ? "icono-volumeMedium" : "icono-volumeMute";
 
   return (

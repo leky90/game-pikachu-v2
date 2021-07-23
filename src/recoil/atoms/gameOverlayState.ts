@@ -5,6 +5,7 @@ const gameOverlayState = atom<GameOverlayState>({
   key: GameTypeState.GAME_OVERLAY_STATE,
   default: {
     connectingLinePoints: [],
+    suggestPoints: [undefined, undefined],
   },
 });
 

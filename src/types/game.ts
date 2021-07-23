@@ -51,9 +51,7 @@ export enum GameTypeState {
   PLAYER_STATE = "PLAYER_STATE",
   GAME_STATE = "GAME_STATE",
   GAME_SOUND_STATE = "GAME_SOUND_STATE",
-  GAME_TIMING_STATE = "GAME_TIMING_STATE",
   GAME_OVERLAY_STATE = "GAME_OVERLAY_STATE",
-  GAME_SUGGEST_TIMING_STATE = "GAME_SUGGEST_TIMING_STATE",
   SELECTED_POKEMONS = "SELECTED_POKEMONS",
 }
 
@@ -75,6 +73,7 @@ export interface GameState {
 
 export interface GameOverlayState {
   connectingLinePoints: PointCoords[];
+  suggestPoints: [PointCoords | undefined, PointCoords | undefined];
 }
 
 export enum Direction {
@@ -202,7 +201,7 @@ export const nextLevel = {
 };
 
 export const BASE_START_TIME = 300;
-export const SUGGEST_TIME = 5;
+export const SUGGEST_TIME = 15;
 export const BONUS_TIME = 2;
 export const PENALTY_TIME = 5;
 export const PENDING_TIME = 3;

@@ -457,6 +457,8 @@ export const hasAnyConnectLine = (
   totalCol: number
 ) => {
   let foundConnectLine = false;
+  let fromPoint: PointCoords | undefined = undefined;
+  let toPoint: PointCoords | undefined = undefined;
   const entriesPokemons = Object.entries(pokemons);
 
   while (entriesPokemons.length) {
@@ -478,15 +480,20 @@ export const hasAnyConnectLine = (
             totalCol
           );
 
-          // if (connected) {
-          //   console.log(
-          //     "debug thôi, đừng có xem",
-          //     currentPokemon.rowIndex,
-          //     currentPokemon.colIndex,
-          //     pokemon.rowIndex,
-          //     pokemon.colIndex
-          //   );
-          // }
+          if (connected) {
+            if (currentPokemon.rowIndex && currentPokemon.colIndex) {
+              fromPoint = {
+                rowIndex: currentPokemon.rowIndex,
+                colIndex: currentPokemon.colIndex,
+              };
+            }
+            if (pokemon.rowIndex && pokemon.colIndex) {
+              toPoint = {
+                rowIndex: pokemon.rowIndex,
+                colIndex: pokemon.colIndex,
+              };
+            }
+          }
 
           return connected;
         }
@@ -499,5 +506,5 @@ export const hasAnyConnectLine = (
     }
   }
 
-  return foundConnectLine;
+  return { foundConnectLine, fromPoint, toPoint };
 };

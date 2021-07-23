@@ -3,11 +3,8 @@ import { useLocation } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import gameState from "../recoil/atoms/gameState";
-import gameTimingState from "../recoil/atoms/gameTimingState";
 import playerState from "../recoil/atoms/playerState";
-import suggestTimingState from "../recoil/atoms/suggestTimingState";
 import {
-  BASE_START_TIME,
   GameLevel,
   GameMode,
   GameStatus,
@@ -39,7 +36,6 @@ export default function useGameEngine(mode: GameMode) {
   } = useGameActions(mode);
   const setGame = useSetRecoilState(gameState);
   const currentPlayer = useRecoilValue(playerState);
-  const setGameTiming = useSetRecoilState(gameTimingState);
   const { matrix, row, col, status, pokemons, level } =
     useRecoilValue(gameState);
   const shuffleMatrix = (pokemons: Record<string, Pokemon>) => {
@@ -65,12 +61,6 @@ export default function useGameEngine(mode: GameMode) {
       // playFanfareSound && playFanfareSound();
       initGame(level);
       addNewRankingScore(mode, currentPlayer.playerName);
-      if (mode === GameMode.SURVIVAL_MODE) {
-        setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
-      }
-      if (mode === GameMode.SPEED_MODE) {
-        setGameTiming({ timing: 0 });
-      }
     }
     return () => {
       // cleanup
@@ -112,10 +102,13 @@ export default function useGameEngine(mode: GameMode) {
         }
       }
     } else {
-      if (
-        Object.keys(pokemons).length &&
-        hasAnyConnectLine(pokemons, matrix, row, col) === false
-      ) {
+      const { foundConnectLine } = hasAnyConnectLine(
+        pokemons,
+        matrix,
+        row,
+        col
+      );
+      if (Object.keys(pokemons).length && foundConnectLine === false) {
         shuffleMatrix(pokemons);
         playLevelUpSound && playLevelUpSound();
       }
@@ -127,12 +120,6 @@ export default function useGameEngine(mode: GameMode) {
     if (status === GameStatus.RUNNING) {
       // playFanfareSound && playFanfareSound();
       initGame(GameLevel.LEVEL_1);
-      if (mode === GameMode.SURVIVAL_MODE) {
-        setGameTiming({ timing: BASE_START_TIME, yourTiming: 0 });
-      }
-      if (mode === GameMode.SPEED_MODE) {
-        setGameTiming({ timing: 0 });
-      }
     }
   }, [location]);
 

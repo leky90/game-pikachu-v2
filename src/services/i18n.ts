@@ -55,6 +55,7 @@ i18n
           "Service is not available now.": "Service is not available now.",
           "Please try again": "Please try again",
           "Chat slowly please": "Chat slowly please",
+          "Service is under maintenance": "Service is under maintenance",
         },
       },
       vi: {
@@ -105,6 +106,7 @@ i18n
           "Service is not available now.": "Dịch vụ hiện tại không khả dụng.",
           "Please try again": "Thử lại",
           "Chat slowly please": "Chat chậm lại bạn nhé",
+          "Service is under maintenance": "Dịch vụ đang được bảo trì",
         },
       },
     },

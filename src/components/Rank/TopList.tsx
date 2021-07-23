@@ -43,7 +43,7 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
           </Link>
         ))}
       <ol className="rank-list">
-        {status === ResponseStatus.SUCCESS &&
+        {status === ResponseStatus.SUCCESS && topPlayersResponse?.data ? (
           topPlayersResponse?.data?.map(
             (player: TopPlayer, index: number) =>
               player.timing && (
@@ -52,7 +52,10 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
                   {dateTimeFromTimestamp(player.timestamp)}
                 </li>
               )
-          )}
+          )
+        ) : (
+          <li>{t("Service is under maintenance")}</li>
+        )}
         {status === ResponseStatus.ERROR && error && (
           <p className="has-error">{error}</p>
         )}

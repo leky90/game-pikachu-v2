@@ -1,6 +1,5 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { useGameActions } from "../../hooks/useGameActions";
 import { GameMode } from "../../types/game";
 import GameLevel from "./GameLevel";

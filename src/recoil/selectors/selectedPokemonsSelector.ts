@@ -43,6 +43,7 @@ const selectedPokemonsSelector = selector({
         });
       }
       set(gameOverlayState, {
+        suggestPoints: [undefined, undefined],
         connectingLinePoints,
       });
     }

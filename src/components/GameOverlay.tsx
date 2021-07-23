@@ -8,7 +8,8 @@ type GameOverlayProps = {
 };
 
 const GameOverlay: FC<GameOverlayProps> = ({ mode }) => {
-  const { connectingLinePoints, matrix, row, col } = useGameOverlayEngine(mode);
+  const { connectingLinePoints, suggestPoints, matrix, row, col } =
+    useGameOverlayEngine(mode);
 
   const columnCards = new Array(col + 2).fill(false);
 
@@ -21,6 +22,7 @@ const GameOverlay: FC<GameOverlayProps> = ({ mode }) => {
             cards={columnCards}
             rowIndex={index}
             connectingLinePoints={connectingLinePoints}
+            suggestPoints={suggestPoints}
           />
         ))}
     </div>

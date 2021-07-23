@@ -12,7 +12,7 @@ import { GameMode } from "../types/game";
 
 const SinglePlayerPage = () => {
   const { t } = useTranslation();
-  const { playPopUpOnSound, playGameSong } = useRecoilValue(gameSoundState);
+  const { playPopUpOnSound } = useRecoilValue(gameSoundState);
   const { resetGame } = useGameActions(GameMode.SURVIVAL_MODE);
 
   useEffect(() => {
