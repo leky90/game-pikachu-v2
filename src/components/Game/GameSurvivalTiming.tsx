@@ -134,6 +134,7 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
     if (connectingLinePoints.length > 1) {
       playRisingPopSound && playRisingPopSound();
       remainTiming.current += BONUS_TIME;
+      suggestTiming.current = 0;
     }
   }, [connectingLinePoints]);
 
