@@ -16,7 +16,7 @@ const ListActivePlayers = () => {
     console.log("timeoutId");
     const timeoutId = setTimeout(() => {
       execute();
-    }, 10000);
+    }, 30000);
 
     return () => {
       timeoutId && clearTimeout(timeoutId);
@@ -26,7 +26,7 @@ const ListActivePlayers = () => {
   return (
     <ul className="active-players-box">
       {status === ResponseStatus.SUCCESS &&
-        activePlayersResponse?.data.map(
+        activePlayersResponse?.data?.map(
           (activePlayer: string, index: number) => (
             <ActivePlayer
               playerName={activePlayer}

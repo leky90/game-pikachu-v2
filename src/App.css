@@ -824,7 +824,13 @@ i.icono-volumeMute {
 .game-theme {
   position: fixed;
   z-index: -100;
-  opacity: 0;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.game-theme > div {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 @media screen and (max-width: 1024px) {
