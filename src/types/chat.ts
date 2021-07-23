@@ -10,3 +10,6 @@ export type Message = {
 export interface MessagesState {
   messages: Message[];
 }
+
+export const BASE_WS_URL = "wss://pokemon-game.ldktech.com/websocket";
+// export const BASE_WS_URL = "ws://localhost:8080";

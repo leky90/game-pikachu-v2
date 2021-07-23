@@ -7,13 +7,12 @@ import messagesState from "../recoil/atoms/messagesState";
 import playerState from "../recoil/atoms/playerState";
 import ChatBox from "./Chat/ChatBox";
 import MessagesBox from "./Chat/MessagesBox";
+import ListActivePlayers from "./Chat/ListActivePlayers";
+import { BASE_WS_URL } from "../types/chat";
 
 interface ChatRoomProps {
   room: string;
 }
-
-// const BASE_WS_URL = "wss://pokemon-game.ldktech.com/websocket";
-const BASE_WS_URL = "ws://localhost:8080";
 
 const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
   const { t } = useTranslation();
@@ -81,8 +80,11 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
       <div className="chat-container">
         {readyState === ReadyState.OPEN && (
           <>
-            <MessagesBox />
-            <ChatBox handleSubmit={handleSubmit} />
+            <div className="chat-box-container">
+              <MessagesBox />
+              <ChatBox handleSubmit={handleSubmit} />
+            </div>
+            <ListActivePlayers />
           </>
         )}
         {readyState === ReadyState.CLOSED && (

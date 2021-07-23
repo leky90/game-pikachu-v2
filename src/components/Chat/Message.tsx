@@ -14,11 +14,13 @@ const Message: FC<MessageProps> = ({ message }) => {
     const selfClass = playerName === name ? "self" : "";
     return (
       <div className={`message ${selfClass}`}>
-        <small className="message-name">{name}</small>
-        <strong className="message-content">{content}</strong>
-        <small className="message-date">
-          <em>{dateTimeFromTimestamp(timestamp)}</em>
+        <small className="message-name">
+          {name.replace(/-.*$/g, "")} <em>(ID: {name.replace(/^.*-/g, "")})</em>
         </small>
+        <strong className="message-content">{content}</strong>
+        {/* <small className="message-date">
+          <em>{dateTimeFromTimestamp(timestamp)}</em>
+        </small> */}
       </div>
     );
   } catch {

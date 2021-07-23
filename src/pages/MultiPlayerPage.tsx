@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import ChatRoom from "../components/ChatRoom";
 import SwitchLanguage from "../components/SwitchLanguage";
+import Welcome from "../components/Welcome";
 import gameSoundState from "../recoil/atoms/gameSoundState";
+import playerState from "../recoil/atoms/playerState";
 import { Routes } from "../routes/CONSTANTS";
 
 const MultiPlayerPage = () => {
   const { t } = useTranslation();
-
   const { playPopUpOnSound, playGlugSound } = useRecoilValue(gameSoundState);
 
   const showInDevelopment = () => {
@@ -29,6 +30,7 @@ const MultiPlayerPage = () => {
       <div className="sidebar">
         <div className="game-info">
           <h1 className="game-title">{t("Multi player")}</h1>
+          <Welcome />
         </div>
         <div>
           <div className="text-center">

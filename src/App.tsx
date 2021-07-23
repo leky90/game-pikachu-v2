@@ -23,7 +23,10 @@ function App() {
   const history = useHistory();
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
   const [language] = useLocalStorage("language", "vi");
-  const [prevPlayerName, setPlayerName] = useLocalStorage("playerName", "");
+  const [prevPlayerName, saveLocalPlayerName] = useLocalStorage(
+    "playerName",
+    ""
+  );
 
   useEffect(() => {
     i18n.changeLanguage(language);
@@ -33,18 +36,20 @@ function App() {
     if (
       prevPlayerName &&
       prevPlayerName !== "" &&
-      prevPlayerName.match(/^[a-zA-Z0-9 ]*$/gim)
+      prevPlayerName.replace(/-.*$/g, "").match(/^[a-zA-Z0-9 ]*$/gim)
     ) {
       if (
         currentPlayer.playerName.trim() !== "" &&
-        currentPlayer.playerName.match(/^[a-zA-Z0-9 ]*$/gim)
+        currentPlayer.playerName
+          .replace(/-.*$/g, "")
+          .match(/^[a-zA-Z0-9 ]*$/gim)
       ) {
         setPlayer({ playerName: currentPlayer.playerName, playerTiming: 0 });
       } else {
         setPlayer({ playerName: prevPlayerName, playerTiming: 0 });
       }
     } else {
-      setPlayerName("");
+      saveLocalPlayerName("");
       history.push(Routes.PLAYER_PAGE);
     }
   }, [prevPlayerName]);

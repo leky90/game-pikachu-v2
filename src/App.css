@@ -532,24 +532,59 @@ button:hover {
 .chat-container {
   padding: 16px;
   display: flex;
-  flex-direction: column;
   height: 100%;
+  box-sizing: border-box;
+  justify-content: space-around;
+  margin: 0 -8px;
+}
+
+.chat-box-container,
+.active-players-box {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #3b82f6;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(2, 0, 36, 0.3);
+  margin: 0 8px;
   box-sizing: border-box;
 }
 
 .messages-box {
   flex: 1;
-  border-radius: 8px;
-  border: 1px solid #3b82f6;
-  padding: 16px;
-  overflow: auto;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+}
+
+.active-players-box {
+  flex: 0 0 200px;
+  overflow: auto;
+  padding: 16px;
+  list-style: none;
+}
+
+.active-player {
+  border-bottom: 1px solid #26a0da;
+  padding: 6px 0;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.active-player * {
+  display: block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .message {
   margin-bottom: 8px;
   align-self: flex-start;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
 .message.self {
@@ -563,10 +598,16 @@ button:hover {
 
 .message-name {
   color: rgb(48, 39, 109);
+  display: inline-flex;
+}
+
+.message-name em {
+  margin: 0 6px;
 }
 
 .message.self .message-name {
   color: rgb(23, 109, 62);
+  flex-direction: row-reverse;
 }
 
 .message-content {
@@ -746,14 +787,20 @@ i[class*="icono-"] * {
   top: 16px;
   cursor: pointer;
   z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 6px;
+  border-radius: 6px;
 }
 
 .toggle-music-effect {
   position: fixed;
-  right: 64px;
+  right: 70px;
   top: 16px;
   cursor: pointer;
   z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 6px;
+  border-radius: 6px;
 }
 
 i.icono-black,
@@ -777,6 +824,7 @@ i.icono-volumeMute {
 .game-theme {
   position: fixed;
   z-index: -100;
+  opacity: 0;
 }
 
 @media screen and (max-width: 1024px) {
@@ -830,5 +878,14 @@ i.icono-volumeMute {
   }
   .game-pokemon {
     /* min-height: 100vh; */
+  }
+}
+
+@media screen and (max-width: 467px) {
+  .row {
+    flex-direction: column;
+  }
+  .active-players-box {
+    flex-basis: 140px;
   }
 }

@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import SwitchLanguage from "../components/SwitchLanguage";
 import { Helmet } from "react-helmet";
 import { GameMode } from "../types/game";
+import Welcome from "../components/Welcome";
 
 const SinglePlayerPage = () => {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ const SinglePlayerPage = () => {
       <div className="sidebar">
         <div className="game-info">
           <h1 className="game-title">{t("Single player")}</h1>
+          <Welcome />
         </div>
         <div>
           <Link to={Routes.SURVIVAL_MODE_PAGE}>

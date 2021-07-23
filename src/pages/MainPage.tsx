@@ -6,11 +6,11 @@ import gameSoundState from "../recoil/atoms/gameSoundState";
 import SwitchLanguage from "../components/SwitchLanguage";
 import { Helmet } from "react-helmet";
 import playerState from "../recoil/atoms/playerState";
+import Welcome from "../components/Welcome";
 
 const MainPage = () => {
   const { t } = useTranslation();
   const { playPopUpOnSound } = useRecoilValue(gameSoundState);
-  const { playerName } = useRecoilValue(playerState);
 
   return (
     <div className="main-board">
@@ -19,9 +19,7 @@ const MainPage = () => {
         <title>Pika pika! - Main board</title>
       </Helmet>
       <nav className="navigation">
-        <h3 className="text-center">
-          {t("Welcome")}, {playerName}
-        </h3>
+        <Welcome />
         <Link to={Routes.SINGLE_PLAYER_PAGE}>
           <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
             {t("Single player")}

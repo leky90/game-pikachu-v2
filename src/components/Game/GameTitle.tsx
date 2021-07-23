@@ -12,7 +12,7 @@ const GameTitle: FC<{ title: string }> = ({ title }) => {
   return (
     <h1 className="game-title">
       {status === GameStatus.COMPLETED
-        ? t("Congratulations") + " " + playerName
+        ? t("Congratulations") + " " + playerName.replace(/-.*$/g, "")
         : title}
     </h1>
   );
