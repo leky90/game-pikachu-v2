@@ -67,12 +67,9 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
     if (status === GameStatus.PENDING) {
       timing.current = 0;
       pendingTiming.current = PENDING_TIME;
+      const countdownEl = document.getElementById("count-down-pending-timing");
+      if (countdownEl) countdownEl.innerText = pendingTiming.current.toString();
       intervalId = setInterval(() => {
-        const countdownEl = document.getElementById(
-          "count-down-pending-timing"
-        );
-        if (countdownEl)
-          countdownEl.innerText = pendingTiming.current.toString();
         if (pendingTiming.current <= 1) {
           intervalId && clearInterval(intervalId);
           pendingTiming.current = PENDING_TIME;
@@ -80,6 +77,11 @@ const GameSurvivalTiming: FC<{ hasTiming: boolean }> = ({
         } else {
           pendingTiming.current--;
         }
+        const countdownEl = document.getElementById(
+          "count-down-pending-timing"
+        );
+        if (countdownEl)
+          countdownEl.innerText = pendingTiming.current.toString();
       }, 1000);
     }
 

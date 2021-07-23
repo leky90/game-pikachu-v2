@@ -94,8 +94,6 @@ const GameTiming: FC<{ hasTiming: boolean }> = ({ hasTiming = false }) => {
     }
   }, [connectingLinePoints]);
 
-  console.log(status, pendingTiming.current);
-
   return (
     <>
       {!hasTiming && (
