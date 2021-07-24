@@ -1,9 +1,8 @@
 import { useRecoilValue } from "recoil";
 import gameState from "../recoil/atoms/gameState";
 import gameOverlayState from "../recoil/atoms/gameOverlayState";
-import { GameMode } from "../types/game";
 
-export default function useGameOverlayEngine(mode: GameMode) {
+export default function useGameOverlayEngine() {
   const { connectingLinePoints, suggestPoints } =
     useRecoilValue(gameOverlayState);
   const { matrix, row, col, status } = useRecoilValue(gameState);

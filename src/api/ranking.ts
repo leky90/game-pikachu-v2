@@ -5,7 +5,7 @@ import BASE_API from "./CONSTANTS";
 export type TopPlayer = {
   _id?: string;
   timing?: number;
-  playerName: string;
+  player: string;
   mode: GameMode;
   timestamp: number;
 };

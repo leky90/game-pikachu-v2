@@ -1,3 +1,4 @@
+import { ReadyState } from "react-use-websocket";
 import { PlayFunction } from "use-sound/dist/types";
 
 export enum GameSelector {
@@ -6,7 +7,7 @@ export enum GameSelector {
 
 export interface PlayerState {
   rankingId?: string;
-  playerName: string;
+  player: string;
   playerTiming: number;
 }
 
@@ -52,12 +53,16 @@ export enum GameTypeState {
   GAME_STATE = "GAME_STATE",
   GAME_SOUND_STATE = "GAME_SOUND_STATE",
   GAME_OVERLAY_STATE = "GAME_OVERLAY_STATE",
+  GAME_BATTLE_STATE = "GAME_BATTLE_STATE",
   SELECTED_POKEMONS = "SELECTED_POKEMONS",
+  CHAT_SOCKET_STATE = "CHAT_SOCKET_STATE",
+  GAME_SUPPORTSTATE = "GAME_SUPPORTSTATE",
 }
 
 export enum GameStatus {
   RUNNING = "running",
   PENDING = "pending",
+  READY = "ready",
   COMPLETED = "completed",
   FAILED = "failed",
 }
@@ -74,6 +79,63 @@ export interface GameState {
 export interface GameOverlayState {
   connectingLinePoints: PointCoords[];
   suggestPoints: [PointCoords | undefined, PointCoords | undefined];
+}
+
+export interface ChatSocketState {
+  sendMakeGame?: (gameId: string) => void;
+}
+export interface GameBattleState {
+  gameId?: string;
+  allReady: string[];
+  competitor?: string;
+  competitorPoint?: number;
+  yourPoint?: number;
+  socketStatus: ReadyState;
+  selectPokemon?: (rowIndex: number, colIndex: number) => void;
+  sendReadyGame?: () => void;
+  sendUnReadyGame?: () => void;
+  sendQuitGame?: () => void;
+  sendJoinedGame?: () => void;
+  sendSelectedPokemon?: (rowIndex: number, colInddex: number) => void;
+}
+
+export enum SocketCommand {
+  SUBSCRIBE = 0,
+  UNSUBSCRIBE = 1,
+  SEND_MESSAGE = 2,
+}
+export interface GameSocketMessage {
+  command: SocketCommand;
+  event: GameSocketEvents;
+  player: string;
+  content?: string;
+  match?: string;
+  currentPlayer?: string;
+}
+
+export interface ChatSocketMessage {
+  command: SocketCommand;
+  channel: string;
+  player: string;
+  content?: string;
+  timestamp?: number;
+}
+
+export enum GameBattleStatus {
+  READY = "ready",
+  END = "end",
+}
+
+export enum GameSocketEvents {
+  READY = "READY",
+  UNREADY = "UNREADY",
+  QUIT = "QUIT",
+  JOINED = "JOINED",
+  SELECTED_POKEMON = "SELECTED_POKEMON",
+}
+
+export enum ChatSocketEvents {
+  MAKE_GAME = "MAKE_GAME",
 }
 
 export enum Direction {
@@ -197,9 +259,10 @@ export const nextLevel = {
   [GameLevel.LEVEL_11]: GameLevel.LEVEL_12,
   [GameLevel.LEVEL_12]: GameLevel.LEVEL_13,
   [GameLevel.LEVEL_13]: GameLevel.LEVEL_14,
-  [GameLevel.LEVEL_14]: GameLevel.LEVEL_9,
+  [GameLevel.LEVEL_14]: GameLevel.LEVEL_14,
 };
 
+export const LEVEL_MAX = GameLevel.LEVEL_14;
 export const BASE_START_TIME = 300;
 export const SUGGEST_TIME = 10;
 export const BONUS_TIME = 2;

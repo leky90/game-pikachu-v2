@@ -1,22 +1,23 @@
 import { FC, memo } from "react";
+import { getPlayerID, getPlayerName } from "../../utils/game";
 
 interface ActivePlayer {
-  playerName: string;
+  player: string;
 }
 
-const ActivePlayer: FC<ActivePlayer> = ({ playerName }) => {
+const ActivePlayer: FC<ActivePlayer> = ({ player }) => {
   return (
     <li className="active-player">
-      <strong>{playerName.replace(/-.*$/g, "")}</strong>
+      <strong>{getPlayerName(player)}</strong>
       <small>
-        <em>ID: {playerName.replace(/^.*-/g, "")}</em>
+        <em>ID: {getPlayerID(player)}</em>
       </small>
     </li>
   );
 };
 
 function areSameProps(prevProps: ActivePlayer, nextProps: ActivePlayer) {
-  return prevProps.playerName === nextProps.playerName;
+  return prevProps.player === nextProps.player;
 }
 
 export default memo(ActivePlayer, areSameProps);

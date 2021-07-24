@@ -13,16 +13,16 @@ const PlayerPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const setPlayer = useSetRecoilState(playerState);
-  const [_, saveLocalPlayerName] = useLocalStorage("playerName", "");
+  const [_, saveLocalPlayerName] = useLocalStorage("player", "");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const playerName = event.currentTarget.playerName.value;
     if (playerName && playerName.trim() !== "") {
       if (playerName.match(/^[a-zA-Z0-9 ]*$/gim)) {
-        const newPlayerName = playerName + "-" + nanoid(6);
-        saveLocalPlayerName(newPlayerName);
-        setPlayer({ playerName: newPlayerName, playerTiming: 0 });
+        const newPlayer = playerName + "-" + nanoid(6);
+        saveLocalPlayerName(newPlayer);
+        setPlayer({ player: newPlayer, playerTiming: 0 });
         history.push(Routes.MAIN_PAGE);
       } else {
         alert(t("Accept alphabet and digit only."));

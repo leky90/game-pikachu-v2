@@ -8,6 +8,7 @@ import {
   GameLevel,
   GameMode,
   GameStatus,
+  LEVEL_MAX,
   nextLevel,
   Pokemon,
 } from "../types/game";
@@ -60,7 +61,7 @@ export default function useGameEngine(mode: GameMode) {
     if (status === GameStatus.PENDING) {
       // playFanfareSound && playFanfareSound();
       initGame(level);
-      addNewRankingScore(mode, currentPlayer.playerName);
+      addNewRankingScore(mode, currentPlayer.player);
     }
     return () => {
       // cleanup
@@ -74,7 +75,7 @@ export default function useGameEngine(mode: GameMode) {
         updateNewRankingScore(
           currentPlayer.rankingId,
           mode,
-          currentPlayer.playerName,
+          currentPlayer.player,
           currentPlayer.playerTiming
         );
       }
@@ -85,7 +86,7 @@ export default function useGameEngine(mode: GameMode) {
   useEffect(() => {
     if (checkCompletedLevel(pokemons)) {
       const levelUp: GameLevel = nextLevel[level];
-      if (level !== levelUp || mode === GameMode.SURVIVAL_MODE) {
+      if (levelUp !== LEVEL_MAX || mode === GameMode.SURVIVAL_MODE) {
         initGame(levelUp, GameStatus.RUNNING);
         playCompletedGameSound && playCompletedGameSound();
       } else {

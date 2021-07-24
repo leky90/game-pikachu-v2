@@ -5,10 +5,10 @@ import playerState from "../../recoil/atoms/playerState";
 
 const GameReplay: FC<{ action: Function }> = ({ action }) => {
   const { t } = useTranslation();
-  const { playerName } = useRecoilValue(playerState);
+  const { player } = useRecoilValue(playerState);
   return (
     <p>
-      <button onClick={() => action(playerName)}>{t("Replay")}</button>
+      <button onClick={() => action(player)}>{t("Replay")}</button>
     </p>
   );
 };

@@ -1,6 +1,7 @@
-import { memo, useEffect } from "react";
+import { FC, memo, ReactNode, useEffect } from "react";
 import { ActivePlayersResponse, getActivePlayers } from "../../api/user";
 import useAsync, { ResponseStatus } from "../../hooks/useAsync";
+import { getPlayerID } from "../../utils/game";
 import { preventReRender } from "../../utils/memo";
 import ActivePlayer from "./ActivePlayer";
 
@@ -13,7 +14,6 @@ const ListActivePlayers = () => {
   } = useAsync<ActivePlayersResponse>(getActivePlayers, true);
 
   useEffect(() => {
-    console.log("timeoutId");
     const timeoutId = setTimeout(() => {
       execute();
     }, 30000);
@@ -24,17 +24,19 @@ const ListActivePlayers = () => {
   }, [status]);
 
   return (
-    <ul className="active-players-box">
-      {status === ResponseStatus.SUCCESS &&
-        activePlayersResponse?.data?.map(
-          (activePlayer: string, index: number) => (
-            <ActivePlayer
-              playerName={activePlayer}
-              key={activePlayer.replace(/^.*-/g, "")}
-            />
-          )
-        )}
-    </ul>
+    <div className="active-players-box">
+      <ul>
+        {status === ResponseStatus.SUCCESS &&
+          activePlayersResponse?.data?.map(
+            (activePlayer: string, index: number) => (
+              <ActivePlayer
+                player={activePlayer}
+                key={getPlayerID(activePlayer)}
+              />
+            )
+          )}
+      </ul>
+    </div>
   );
 };
 

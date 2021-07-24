@@ -24,7 +24,7 @@ const SpeedModePage = () => {
       </Helmet>
       <div className={`game-board game-${status}`}>
         <GameSpeedInfo />
-        <GameOverlay mode={GameMode.SPEED_MODE} />
+        <GameOverlay />
         <GameBoard mode={GameMode.SPEED_MODE} />
       </div>
       <div className="sidebar">

@@ -5,6 +5,8 @@ import {
   PokemonCoords,
   Direction,
   PointType,
+  nextLevel,
+  GameLevel,
 } from "../types/game";
 
 const BASE_URL =
@@ -508,3 +510,17 @@ export const hasAnyConnectLine = (
 
   return { foundConnectLine, fromPoint, toPoint };
 };
+
+export function getPlayerName(player: string) {
+  return player.replace(/-.*$/g, "");
+}
+
+export function getPlayerID(player: string) {
+  return player.replace(/^.*-/g, "");
+}
+
+export function randomLevel() {
+  const index = Math.floor(Math.random() * Object.keys(nextLevel).length) + 1;
+  const level = `LEVEL_${index}` as GameLevel;
+  return nextLevel[level];
+}

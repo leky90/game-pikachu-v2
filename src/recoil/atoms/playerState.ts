@@ -5,7 +5,7 @@ const playerState = atom<PlayerState>({
   key: GameTypeState.PLAYER_STATE,
   default: {
     rankingId: "",
-    playerName: "",
+    player: "",
     playerTiming: 0,
   },
 });

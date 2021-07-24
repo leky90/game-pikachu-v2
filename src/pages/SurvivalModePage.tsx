@@ -24,7 +24,7 @@ const SurvivalModePage = () => {
       </Helmet>
       <div className={`game-board game-${status}`}>
         <GameSurvivalInfo />
-        <GameOverlay mode={GameMode.SURVIVAL_MODE} />
+        <GameOverlay />
         <GameBoard mode={GameMode.SURVIVAL_MODE} />
       </div>
       <div className="sidebar">

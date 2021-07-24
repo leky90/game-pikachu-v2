@@ -58,10 +58,10 @@ export function useGameActions(mode: GameMode) {
     [setGame]
   );
 
-  const replayGame = (playerName: string) => {
+  const replayGame = (player: string) => {
     // playFanfareSound && playFanfareSound();
     initGame(GameLevel.LEVEL_1);
-    // addNewRankingScore(mode, playerName);
+    // addNewRankingScore(mode, player);
   };
 
   const endGame = () => {
@@ -74,10 +74,10 @@ export function useGameActions(mode: GameMode) {
     }
   };
 
-  const addNewRankingScore = (mode: GameMode, playerName: string) => {
+  const addNewRankingScore = (mode: GameMode, player: string) => {
     const playerScore: TopPlayer = {
       mode,
-      playerName,
+      player,
       timestamp: Date.now(),
     };
     addNewRanking(playerScore).then((response) => {
@@ -91,12 +91,12 @@ export function useGameActions(mode: GameMode) {
   const updateNewRankingScore = (
     id: string,
     mode: GameMode,
-    playerName: string,
+    player: string,
     timing: number
   ) => {
     const playerScore: TopPlayer = {
       mode,
-      playerName,
+      player,
       timing,
       timestamp: Date.now(),
     };

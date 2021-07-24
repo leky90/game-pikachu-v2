@@ -19,11 +19,20 @@ i18n
           Welcome: "Welcome",
           Congratulations: "Congratulations",
           Submit: "Submit",
+          Out: "Out",
+          Quit: "Quit",
+          Ready: "Ready",
+          Stop: "Stop",
+          You: "You",
+          Competitor: "Competitor",
+          "Your points": "Your points",
+          "Competitor points": "Competitor points",
           "The fastest is best": "The fastest is best",
           "The longest is best": "The longest is best",
           "Your score": "Your score",
           "Your time": "Your time",
           "Remaining time": "Remaining time",
+          "New game ID just created": "New game just created ID - {{gameId}})",
           "Top players": "Top players",
           "Single player": "Single player",
           "Multi player": "Multi player",
@@ -56,6 +65,17 @@ i18n
           "Please try again": "Please try again",
           "Chat slowly please": "Chat slowly please",
           "Service is under maintenance": "Service is under maintenance",
+          "Welcome to pokemon game!": "Welcome {{name}} to pokemon game!",
+          "Have a good time playing the game.":
+            "Have a good time playing the game, {{name}}.",
+          "Sorry, I'm trying to connect our service again.":
+            "Sorry {{ name }}, I'm trying to connect our service again.",
+          "Connect to service failed. Will try again in the next 5s. Please wait for it.":
+            "Connect to service failed. Will try again in the next 5s. Please wait for it.",
+          "(Help) You can click on a `Game ID` of others to join the match.":
+            "(Help) Hi {{name}}, you can click on a `Game ID` of others to join the match.",
+          "(Help) Please click on make match to create your own match!":
+            "(Help) Hi {{name}}, you click on `Make match` button to create your own match!",
         },
       },
       vi: {
@@ -69,6 +89,14 @@ i18n
           Welcome: "Chào bạn",
           Congratulations: "Xin chúc mừng",
           Submit: "Nhập",
+          Out: "Thoát",
+          Quit: "Thoát",
+          Ready: "Sẵn sàng",
+          Stop: "Dừng",
+          You: "Bạn",
+          Competitor: "Đối thủ",
+          "Your points": "Điểm của bạn",
+          "Competitor points": "Điểm đối thủ",
           "The fastest is best": "Hoàn thành càng sớm, thứ hạng càng cao",
           "The longest is best":
             "Kéo dài thời gian càng lâu, thứ hạng càng cao",
@@ -81,6 +109,8 @@ i18n
           "Main menu": "Màn hình chính",
           "Speed mode": "Tốc độ",
           "Survival mode": "Sinh tồn",
+          "New game ID just created":
+            "Trận đấu mới vừa được tạo ID - {{gameId}})",
           "Coming soon...": "Đang phát triển...",
           "Preparing resource...": "Đang chuẩn bị...",
           "Scroll down to play": "Lăn chuột xuống để chơi",
@@ -107,6 +137,18 @@ i18n
           "Please try again": "Thử lại",
           "Chat slowly please": "Chat chậm lại bạn nhé",
           "Service is under maintenance": "Dịch vụ đang được bảo trì",
+          "Welcome to pokemon game!":
+            "Chào mừng bạn {{name}} đến với trò chơi pokemon!",
+          "Have a good time playing the game.":
+            "Chúc bạn {{name}} có một khoảng thời gian chơi thoải mái và vui vẻ.",
+          "Sorry, I'm trying to connect our service again.":
+            "Xin lỗi {{ name }}, Tôi đang cố gắng kết nối dịch vụ trở lại.",
+          "Connect to service failed. Will try again in the next 5s. Please wait for it.":
+            "Kết nối tới dịch vụ thất bại, sẽ thử lại trong 5s. Vui lòng chờ trong giây lát.",
+          "(Help) You can click on a `Game ID` of others to join the match.":
+            "(Hỗ trợ) Chào {{name}}, bạn có thể click vào `Game ID` của người khác để tham gia trận đấu.",
+          "(Help) Please click on make match to create your own match!":
+            "(Hỗ trợ) Chào {{name}}, Bạn hãy bấm nút `Tạo trận` để có thể bắt đầu trận đấu của mình!",
         },
       },
     },

@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
 import { useRecoilValue } from "recoil";
 import playerState from "../../recoil/atoms/playerState";
+import { getPlayerID, getPlayerName } from "../../utils/game";
 import { dateTimeFromTimestamp } from "../../utils/time";
 
 interface MessageProps {
@@ -8,14 +9,14 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ message }) => {
-  const { playerName } = useRecoilValue(playerState);
+  const { player } = useRecoilValue(playerState);
   try {
     const { name, content, timestamp } = JSON.parse(message);
-    const selfClass = playerName === name ? "self" : "";
+    const selfClass = player === name ? "self" : "";
     return (
       <div className={`message ${selfClass}`}>
         <small className="message-name">
-          {name.replace(/-.*$/g, "")} <em>(ID: {name.replace(/^.*-/g, "")})</em>
+          {getPlayerName(name)} <em>(ID: {getPlayerID(name)})</em>
         </small>
         <strong className="message-content">{content}</strong>
         {/* <small className="message-date">

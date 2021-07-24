@@ -17,7 +17,7 @@ type TopListProps = {
 const TopList: FC<TopListProps> = ({ fetch, mode }) => {
   const { t } = useTranslation();
   const { playPopUpOnSound } = useRecoilValue(gameSoundState);
-  const { status, value: topPlayersResponse, error } = useAsync(fetch, true);
+  const { status, value: topPlayersResponse, error } = useAsync(fetch);
 
   return (
     <>
@@ -45,11 +45,11 @@ const TopList: FC<TopListProps> = ({ fetch, mode }) => {
       <ol className="rank-list">
         {status === ResponseStatus.SUCCESS && topPlayersResponse?.data ? (
           topPlayersResponse?.data?.map(
-            (player: TopPlayer, index: number) =>
-              player.timing && (
+            (topPlayer: TopPlayer, index: number) =>
+              topPlayer.timing && (
                 <li key={`id-${index}`}>
-                  {player.playerName} - {timeConvert(player.timing)} -{" "}
-                  {dateTimeFromTimestamp(player.timestamp)}
+                  {topPlayer.player} - {timeConvert(topPlayer.timing)} -{" "}
+                  {dateTimeFromTimestamp(topPlayer.timestamp)}
                 </li>
               )
           )

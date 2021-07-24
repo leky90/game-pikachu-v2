@@ -16,6 +16,8 @@ import playerState from "./recoil/atoms/playerState";
 import PlayerPage from "./pages/PlayerPage";
 import ToggleSound from "./components/ToggleSound";
 import ToggleMusic from "./components/ToggleMusic";
+import BattleModePage from "./pages/BattleModePage";
+import { getPlayerName } from "./utils/game";
 
 function App() {
   const { t } = useTranslation();
@@ -23,10 +25,7 @@ function App() {
   const history = useHistory();
   const [currentPlayer, setPlayer] = useRecoilState(playerState);
   const [language] = useLocalStorage("language", "vi");
-  const [prevPlayerName, saveLocalPlayerName] = useLocalStorage(
-    "playerName",
-    ""
-  );
+  const [localPlayer, saveLocalPlayerName] = useLocalStorage("player", "");
 
   useEffect(() => {
     i18n.changeLanguage(language);
@@ -34,25 +33,23 @@ function App() {
 
   useEffect(() => {
     if (
-      prevPlayerName &&
-      prevPlayerName !== "" &&
-      prevPlayerName.replace(/-.*$/g, "").match(/^[a-zA-Z0-9 ]*$/gim)
+      localPlayer &&
+      localPlayer !== "" &&
+      getPlayerName(localPlayer).match(/^[a-zA-Z0-9 ]*$/gim)
     ) {
       if (
-        currentPlayer.playerName.trim() !== "" &&
-        currentPlayer.playerName
-          .replace(/-.*$/g, "")
-          .match(/^[a-zA-Z0-9 ]*$/gim)
+        currentPlayer.player.trim() !== "" &&
+        getPlayerName(currentPlayer.player).match(/^[a-zA-Z0-9 ]*$/gim)
       ) {
-        setPlayer({ playerName: currentPlayer.playerName, playerTiming: 0 });
+        setPlayer({ player: currentPlayer.player, playerTiming: 0 });
       } else {
-        setPlayer({ playerName: prevPlayerName, playerTiming: 0 });
+        setPlayer({ player: localPlayer, playerTiming: 0 });
       }
     } else {
       saveLocalPlayerName("");
       history.push(Routes.PLAYER_PAGE);
     }
-  }, [prevPlayerName]);
+  }, [localPlayer]);
 
   return (
     <div className="app">
@@ -79,6 +76,9 @@ function App() {
           </Route>
           <Route path={Routes.SURVIVAL_MODE_PAGE} exact>
             <SurvivalModePage />
+          </Route>
+          <Route path={`${Routes.BATTLE_MODE_PAGE}`} exact>
+            <BattleModePage />
           </Route>
           <Route path={Routes.PLAYER_PAGE} exact>
             <PlayerPage />
