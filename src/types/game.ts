@@ -99,6 +99,7 @@ export interface GameBattleState {
   sendJoinedGame?: () => void;
   sendDecreasePoints?: () => void;
   sendIncreasePoints?: () => void;
+  sendGameWinner?: (winner: string) => void;
   sendGameEffect?: (effect: GameBattleEffect) => void;
   sendSelectedPokemon?: (rowIndex: number, colInddex: number) => void;
 }
@@ -145,6 +146,7 @@ export enum GameSocketEvents {
   DECREASE_COMPETITOR_POINTS = "DECREASE_COMPETITOR_POINTS",
   FREEZE_COMPETITOR_BOARD = "FREEZE_COMPETITOR_BOARD",
   LEVEL_UP_POINTS = "LEVEL_UP_POINTS",
+  GAME_WINNER = "GAME_WINNER",
 }
 
 export enum ChatSocketEvents {

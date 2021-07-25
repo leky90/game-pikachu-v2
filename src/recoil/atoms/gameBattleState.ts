@@ -18,6 +18,7 @@ const gameBattleState = atom<GameBattleState>({
     sendDecreasePoints: undefined,
     sendIncreasePoints: undefined,
     sendGameEffect: undefined,
+    sendGameWinner: undefined,
   },
 });
 

@@ -14,13 +14,19 @@ const GameBattleBar = () => {
   const { player } = useRecoilValue(playerState);
   const yourWidth = 50 + yourPoint - competitorPoint;
 
-  useEffect(() => {
-    if (yourWidth >= 100) {
-      endGame(player);
-    } else if (yourWidth <= 0) {
-      endGame(competitor ?? player);
-    }
-  }, [yourWidth]);
+  // useEffect(() => {
+  //   if (yourWidth >= 100) {
+  //     endGame(player);
+  //   } else if (yourWidth <= 0) {
+  //     endGame(competitor ?? player);
+  //   }
+  // }, [yourWidth]);
+
+  if (yourWidth >= 100) {
+    endGame(player);
+  } else if (yourWidth <= 0) {
+    endGame(competitor ?? player);
+  }
 
   return (
     <div className="battle-bar animated-red-gradient">

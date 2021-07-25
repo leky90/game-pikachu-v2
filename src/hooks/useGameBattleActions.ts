@@ -236,6 +236,8 @@ export function useGameBattleActions() {
           }));
         }
         break;
+      case GameSocketEvents.GAME_WINNER:
+        break;
       default:
         break;
     }
