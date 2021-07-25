@@ -17,20 +17,17 @@ const ReadyGameButton: FC<ReadyGameButtonProps> = ({ status, player }) => {
     useRecoilValue(gameBattleState);
   const classReady = allReady.includes(player) ? "ready" : "";
 
-  const onReady: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      if ([GameStatus.PENDING, GameStatus.COMPLETED].includes(status)) {
-        if (classReady === "ready") {
-          sendUnReadyGame && sendUnReadyGame();
-        } else {
-          sendReadyGame && sendReadyGame();
-        }
-      } else if ([GameStatus.RUNNING, GameStatus.READY].includes(status)) {
+  const onReady: MouseEventHandler<HTMLButtonElement> = (event) => {
+    if ([GameStatus.PENDING, GameStatus.COMPLETED].includes(status)) {
+      if (classReady === "ready") {
         sendUnReadyGame && sendUnReadyGame();
+      } else {
+        sendReadyGame && sendReadyGame();
       }
-    },
-    [sendReadyGame, sendUnReadyGame]
-  );
+    } else if ([GameStatus.RUNNING, GameStatus.READY].includes(status)) {
+      sendUnReadyGame && sendUnReadyGame();
+    }
+  };
 
   return (
     <>
