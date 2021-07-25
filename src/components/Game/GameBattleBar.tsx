@@ -5,22 +5,33 @@ import { useGameBattleActions } from "../../hooks/useGameBattleActions";
 import { useEffect } from "react";
 import gameBattleState from "../../recoil/atoms/gameBattleState";
 import playerState from "../../recoil/atoms/playerState";
+import gameState from "../../recoil/atoms/gameState";
+import { GameStatus } from "../../types/game";
 
 const GameBattleBar = () => {
   const { t } = useTranslation();
   const { endGame } = useGameBattleActions();
   const { yourPoint, competitorPoint } = useRecoilValue(gameBattlePointsState);
   const { competitor } = useRecoilValue(gameBattleState);
+  const { status } = useRecoilValue(gameState);
   const { player } = useRecoilValue(playerState);
   const yourWidth = 50 + yourPoint - competitorPoint;
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (yourWidth >= 100) {
+  //     endGame(player);
+  //   } else if (yourWidth <= 0) {
+  //     endGame(competitor ?? player);
+  //   }
+  // }, [yourWidth]);
+
+  if (status === GameStatus.RUNNING) {
     if (yourWidth >= 100) {
       endGame(player);
     } else if (yourWidth <= 0) {
       endGame(competitor ?? player);
     }
-  }, [yourWidth]);
+  }
 
   return (
     <div className="battle-bar animated-red-gradient">
