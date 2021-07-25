@@ -130,8 +130,8 @@ button:hover {
 }
 
 .button-join-game {
-  padding: 4px 8px;
-  margin: 4px;
+  padding: 8px;
+  margin: 4px 0;
 }
 
 .inline-button {
@@ -644,12 +644,26 @@ button:hover {
   list-style: none;
 }
 
+.active-players-box ul a {
+  display: block;
+  padding: 0 6px;
+}
+
+.active-players-box ul li button {
+  width: 100%;
+}
+
 .active-player {
   border-bottom: 1px solid #26a0da;
   padding: 6px 0;
   line-height: 1.5;
   font-size: 14px;
   cursor: pointer;
+}
+
+.active-player.full-slot button {
+  background-image: linear-gradient(to right, #314755 0%, orangered 100%);
+  background-position: right center;
 }
 
 .active-player strong {
