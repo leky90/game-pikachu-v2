@@ -7,6 +7,7 @@ import gameState from "../../recoil/atoms/gameState";
 import playerState from "../../recoil/atoms/playerState";
 import { Routes } from "../../routes/CONSTANTS";
 import CompetitorReadyGameButton from "./CompetitorReadyGameButton";
+import GameBattleBar from "./GameBattleBar";
 import GameBoardContainer from "./GameBoardContainer";
 import ReadyGameButton from "./ReadyGameButton";
 
@@ -21,8 +22,7 @@ const GameBattleContainer: FC<GameBattleContainerProps> = ({
 }) => {
   const { t } = useTranslation();
   const { status } = useRecoilValue(gameState);
-  const { sendQuitGame, yourPoint, competitorPoint } =
-    useRecoilValue(gameBattleState);
+  const { sendQuitGame } = useRecoilValue(gameBattleState);
   return (
     <>
       <div className="battle-container-bar">
@@ -32,16 +32,7 @@ const GameBattleContainer: FC<GameBattleContainerProps> = ({
             <button className={`button-quit`}>{t("Quit")}</button>
           </Link>
         </div>
-        <div className="battle-bar animated-red-gradient">
-          <div className="your-bar animated-blue-gradient">
-            <span className="point">
-              {t("Your points")} {yourPoint ?? 0}
-            </span>
-          </div>
-          <span className="point">
-            {competitorPoint ?? 0} {t("Competitor points")}
-          </span>
-        </div>
+        <GameBattleBar />
         <div id="competitor-player-name" className=" player-box">
           <CompetitorReadyGameButton status={status} player={player} />
         </div>

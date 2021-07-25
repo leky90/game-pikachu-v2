@@ -10,11 +10,11 @@ import gameBattleState from "../../recoil/atoms/gameBattleState";
 const GamePendingTiming = () => {
   const { t } = useTranslation();
   const { status } = useRecoilValue(gameState);
-  const { allReady } = useRecoilValue(gameBattleState);
+  const { allReady, winner } = useRecoilValue(gameBattleState);
   const { startGame } = useGameBattleActions();
   const pendingTiming = useRef(PENDING_TIME);
   const [timingState, setTimingState] = useState(0);
-  const player = allReady.length > 0 && allReady[0];
+  const player = winner ? winner : allReady.length > 0 && allReady[0];
   let winnerPlayerName = "";
   if (player) {
     winnerPlayerName = `${getPlayerName(player)} - ${getPlayerID(player)}`;

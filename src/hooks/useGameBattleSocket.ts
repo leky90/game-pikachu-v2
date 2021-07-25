@@ -1,5 +1,6 @@
 import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
 import {
+  GameBattleEffect,
   GameSocketEvents,
   GameSocketMessage,
   SocketCommand,
@@ -49,7 +50,7 @@ export default function useGameBattleSocket({
   const sendSelectedPokemon = (rowIndex: number, colIndex: number) => {
     const messageJson: GameSocketMessage = {
       ...baseMessageJson,
-      event: GameSocketEvents.SELECTED_POKEMON,
+      event: GameSocketEvents.INCREASE_COMPETITOR_POINTS,
     };
     sendJsonMessage(messageJson);
   };
@@ -62,11 +63,50 @@ export default function useGameBattleSocket({
     sendJsonMessage(messageJson);
   };
 
+  const sendIncreasePoints = () => {
+    const messageJson: GameSocketMessage = {
+      ...baseMessageJson,
+      event: GameSocketEvents.INCREASE_COMPETITOR_POINTS,
+    };
+    sendJsonMessage(messageJson);
+  };
+
+  const sendDecreasePoints = () => {
+    const messageJson: GameSocketMessage = {
+      ...baseMessageJson,
+      event: GameSocketEvents.DECREASE_COMPETITOR_POINTS,
+    };
+    sendJsonMessage(messageJson);
+  };
+
+  const sendGameEffect = (effect: GameBattleEffect) => {
+    switch (effect) {
+      case GameBattleEffect.FREEZE:
+        const freeJson: GameSocketMessage = {
+          ...baseMessageJson,
+          event: GameSocketEvents.FREEZE_COMPETITOR_BOARD,
+        };
+        sendJsonMessage(freeJson);
+        break;
+
+      default:
+        const levelUpJson: GameSocketMessage = {
+          ...baseMessageJson,
+          event: GameSocketEvents.LEVEL_UP_POINTS,
+        };
+        sendJsonMessage(levelUpJson);
+        break;
+    }
+  };
+
   return {
     sendReadyGame,
     sendUnReadyGame,
     sendQuitGame,
     sendSelectedPokemon,
     sendJoinedGame,
+    sendDecreasePoints,
+    sendIncreasePoints,
+    sendGameEffect,
   };
 }

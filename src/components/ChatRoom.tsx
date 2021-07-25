@@ -19,6 +19,7 @@ import { BASE_WS_URL, DEFAULT_CHANNEL } from "../types/chat";
 import gameSupportState from "../recoil/atoms/gameSupportState";
 import chatSocketState from "../recoil/atoms/chatSocketState";
 import useChatSocket from "../hooks/useChatSocket";
+import ListActiveGames from "./Chat/ListActiveGames";
 
 interface ChatRoomProps {
   room: string;
@@ -27,7 +28,7 @@ interface ChatRoomProps {
 const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
   const { t } = useTranslation();
   const { player } = useRecoilValue(playerState);
-  const [{ supported }, setSupport] = useRecoilState(gameSupportState);
+  const [{ supported }, setGameSupport] = useRecoilState(gameSupportState);
   const { playPopUpOnSound } = useRecoilValue(gameSoundState);
   const setMessagesState = useSetRecoilState(messagesState);
   const setChatSocketState = useSetRecoilState(chatSocketState);
@@ -42,44 +43,23 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
         username: player,
       },
       onOpen: () => {
-        const helpMessage = {
-          command: 2,
-          channel: DEFAULT_CHANNEL,
-          name: "PokeBot",
-          content: t("Welcome to pokemon game!", { name: player }),
-          timestamp: Date.now(),
-        };
-        sendJsonMessage(helpMessage);
-        if (supported === false) {
-          setTimeout(() => {
-            const helpMessage = {
-              command: 2,
-              channel: DEFAULT_CHANNEL,
-              name: "PokeBot",
-              content: t(
-                "(Help) Please click on make match to create your own match!",
-                {
-                  name: player,
-                }
-              ),
-              timestamp: Date.now(),
-            };
-            setMessagesState(({ messages }) => ({
-              messages: [
-                ...messages,
-                {
-                  content: JSON.stringify(helpMessage),
-                  channel: DEFAULT_CHANNEL,
-                },
-              ],
-            }));
+        setTimeout(() => {
+          const helpMessage = {
+            command: 2,
+            channel: DEFAULT_CHANNEL,
+            name: "PokeBot",
+            content: t("Welcome to pokemon game!", { name: player }),
+            timestamp: Date.now(),
+          };
+          sendJsonMessage(helpMessage);
+          if (supported === false) {
             setTimeout(() => {
               const helpMessage = {
                 command: 2,
                 channel: DEFAULT_CHANNEL,
                 name: "PokeBot",
                 content: t(
-                  "(Help) You can click on a `Game ID` of others to join the match.",
+                  "(Help) Please click on make match to create your own match!",
                   {
                     name: player,
                   }
@@ -95,10 +75,36 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
                   },
                 ],
               }));
-              setSupport({ supported: true });
+              setTimeout(() => {
+                const helpMessage = {
+                  command: 2,
+                  channel: DEFAULT_CHANNEL,
+                  name: "PokeBot",
+                  content: t(
+                    "(Help) You can click on a `Game ID` of others to join the match.",
+                    {
+                      name: player,
+                    }
+                  ),
+                  timestamp: Date.now(),
+                };
+                setMessagesState(({ messages }) => ({
+                  messages: [
+                    ...messages,
+                    {
+                      content: JSON.stringify(helpMessage),
+                      channel: DEFAULT_CHANNEL,
+                    },
+                  ],
+                }));
+                setGameSupport((gameSupport) => ({
+                  ...gameSupport,
+                  supported: true,
+                }));
+              }, 5000);
             }, 5000);
-          }, 5000);
-        }
+          }
+        }, 5000);
       },
       onMessage: (event) => {
         playPopUpOnSound && playPopUpOnSound();
@@ -183,7 +189,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
       "*"
     );
     if (message && message.trim() !== "") {
-      handleClickSendMessage(message);
+      handleClickSendMessage(message.replaceAll("`", ""));
       inputMessage.value = "";
     } else {
       alert(t("Please enter your message"));
@@ -213,7 +219,10 @@ const ChatRoom: FC<ChatRoomProps> = ({ room }) => {
             </div>
           )}
         </div>
-        <ListActivePlayers />
+        <div className="active-boxes">
+          <ListActivePlayers />
+          <ListActiveGames />
+        </div>
       </div>
     </div>
   );

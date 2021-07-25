@@ -8,14 +8,16 @@ const gameBattleState = atom<GameBattleState>({
     gameId: undefined,
     allReady: [],
     competitor: undefined,
-    competitorPoint: 0,
-    yourPoint: 0,
+    winner: undefined,
     socketStatus: ReadyState.UNINSTANTIATED,
     sendSelectedPokemon: undefined,
     sendReadyGame: undefined,
     sendUnReadyGame: undefined,
     sendQuitGame: undefined,
     sendJoinedGame: undefined,
+    sendDecreasePoints: undefined,
+    sendIncreasePoints: undefined,
+    sendGameEffect: undefined,
   },
 });
 

@@ -1,35 +1,52 @@
-import { createRef, useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import gameBattleState from "../recoil/atoms/gameBattleState";
 import gameSoundState from "../recoil/atoms/gameSoundState";
 import gameState from "../recoil/atoms/gameState";
 import playerState from "../recoil/atoms/playerState";
-import { GameLevel, GameStatus, nextLevel, Pokemon } from "../types/game";
+import {
+  GameLevel,
+  GameStatus,
+  LEVEL_BATTLE_MAX,
+  nextLevel,
+  Pokemon,
+} from "../types/game";
 import {
   generatePokemonMatrix,
   checkCompletedLevel,
   hasAnyConnectLine,
   reShufflePokemonList,
-  randomLevel,
+  randomEffectEvent,
 } from "../utils/game";
 import { useGameBattleActions } from "./useGameBattleActions";
-import { useLocation } from "react-router-dom";
+import gameOverlayState from "../recoil/atoms/gameOverlayState";
 
 export default function useGameBattleEngine() {
+  const { playLevelUpSound, playCompletedGameSound } =
+    useRecoilValue(gameSoundState);
   const {
-    playFanfareSound,
-    playLevelUpSound,
-    playCompletedGameSound,
-    playYouWinSound,
-  } = useRecoilValue(gameSoundState);
-  const { initGame, resetGame, endGame, onReadyGame, startGame } =
-    useGameBattleActions();
+    initGame,
+    resetGame,
+    endGame,
+    onReadyGame,
+    startGame,
+    increaseYourPoints,
+    decreaseYourPoints,
+  } = useGameBattleActions();
   const setGame = useSetRecoilState(gameState);
   const currentPlayer = useRecoilValue(playerState);
   const { matrix, row, col, status, pokemons, level } =
     useRecoilValue(gameState);
-  const { allReady, competitor, sendJoinedGame, sendQuitGame } =
-    useRecoilValue(gameBattleState);
+  const {
+    allReady,
+    competitor,
+    sendJoinedGame,
+    sendQuitGame,
+    sendIncreasePoints,
+    sendDecreasePoints,
+    sendGameEffect,
+  } = useRecoilValue(gameBattleState);
+  const { connectingLinePoints } = useRecoilValue(gameOverlayState);
   const shuffleMatrix = (pokemons: Record<string, Pokemon>) => {
     const newShufflePokemons = reShufflePokemonList(pokemons);
     const { pokemonMatrix, pokemons: newPokemons } = generatePokemonMatrix(
@@ -73,14 +90,11 @@ export default function useGameBattleEngine() {
   }, [competitor]);
 
   useEffect(() => {
-    if (
-      [GameStatus.PENDING, GameStatus.COMPLETED].includes(status) &&
-      allReady.length === 2
-    ) {
+    if ([GameStatus.PENDING].includes(status) && allReady.length === 2) {
       onReadyGame();
     }
     if ([GameStatus.RUNNING].includes(status) && allReady.length === 1) {
-      endGame();
+      endGame(allReady[0]);
     }
     if ([GameStatus.READY].includes(status)) {
       if (allReady.length === 1) {
@@ -104,12 +118,16 @@ export default function useGameBattleEngine() {
   useEffect(() => {
     if (checkCompletedLevel(pokemons)) {
       const levelUp: GameLevel = nextLevel[level];
-      if (level === levelUp) {
-        const newLevel = randomLevel();
+      if (LEVEL_BATTLE_MAX === levelUp) {
+        const newLevel = GameLevel.LEVEL_1;
         initGame(newLevel, GameStatus.RUNNING);
       } else {
         initGame(levelUp, GameStatus.RUNNING);
       }
+
+      const effectEvent = randomEffectEvent();
+
+      sendGameEffect && sendGameEffect(effectEvent);
 
       playCompletedGameSound && playCompletedGameSound();
     } else {
@@ -125,6 +143,17 @@ export default function useGameBattleEngine() {
       }
     }
   }, [pokemons]);
+
+  useEffect(() => {
+    if (connectingLinePoints.length === 1) {
+      decreaseYourPoints();
+      sendDecreasePoints && sendDecreasePoints();
+    }
+    if (connectingLinePoints.length > 1) {
+      increaseYourPoints();
+      sendIncreasePoints && sendIncreasePoints();
+    }
+  }, [connectingLinePoints]);
 
   return {
     initGame,

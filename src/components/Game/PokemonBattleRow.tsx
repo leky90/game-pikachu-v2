@@ -17,7 +17,7 @@ const PokemonBattleRow: FC<PokemonBattleRowProps> = ({
   status,
 }) => {
   const selectedPokemons = useRecoilValue(selectedPokemonsState);
-  const { selectPokemon } = useGameBattleActions();
+  const { selectBattlePokemon } = useGameBattleActions();
   return (
     <>
       {pokemons.map((pokemon, index) => (
@@ -30,7 +30,7 @@ const PokemonBattleRow: FC<PokemonBattleRowProps> = ({
             pokemon.nid !== undefined &&
             selectedPokemons.findIndex(({ nid }) => nid === pokemon.nid) >= 0
           }
-          selectPokemon={selectPokemon}
+          selectPokemon={selectBattlePokemon}
           status={status}
         />
       ))}

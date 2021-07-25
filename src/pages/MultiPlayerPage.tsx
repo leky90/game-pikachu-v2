@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { useEffect } from "react";
+import { FormEventHandler, KeyboardEventHandler, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
@@ -24,7 +24,7 @@ const MultiPlayerPage = () => {
     resetGameBattle();
   }, []);
 
-  const showInDevelopment = () => {
+  const findRandomMatch = () => {
     playGlugSound && playGlugSound();
     alert(t("In development"));
   };
@@ -33,11 +33,25 @@ const MultiPlayerPage = () => {
     playPopUpOnSound && playPopUpOnSound();
     const gameId = nanoid(8);
     const message = t("New game ID just created", { gameId });
-    console.log("message", message, sendMakeGame);
     sendMakeGame && sendMakeGame(message);
-    // setTimeout(() => {
-    //   history.push(Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId));
-    // }, 3000);
+
+    setTimeout(() => {
+      history.push(Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId));
+    }, 200);
+  };
+
+  const enterMatchID: FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    const gameId = event.currentTarget.matchId.value;
+    if (
+      !event.currentTarget.matchId.value ||
+      event.currentTarget.matchId.value.trim() === ""
+    ) {
+      playGlugSound && playGlugSound();
+      alert(t("Please enter the right match ID"));
+      return;
+    }
+    history.push(Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId));
   };
 
   return (
@@ -57,9 +71,17 @@ const MultiPlayerPage = () => {
         <div>
           <div className="text-center">
             <button onClick={goToGameMatch}>{t("Make match")}</button>
-            <button onClick={showInDevelopment}>
-              {t("Find random match")}
-            </button>
+            {/* <button onClick={findRandomMatch}>{t("Find random match")}</button> */}
+            <div className="inline-button">
+              <form onSubmit={enterMatchID}>
+                <input
+                  name="matchId"
+                  maxLength={8}
+                  placeholder={t("Enter match ID")}
+                />
+                <button>{t("Join")}</button>
+              </form>
+            </div>
             <Link to={Routes.MAIN_PAGE}>
               <button onClick={() => playPopUpOnSound && playPopUpOnSound()}>
                 {t("Main menu")}

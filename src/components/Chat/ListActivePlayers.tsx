@@ -1,4 +1,5 @@
-import { FC, memo, ReactNode, useEffect } from "react";
+import { memo, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivePlayersResponse, getActivePlayers } from "../../api/user";
 import useAsync, { ResponseStatus } from "../../hooks/useAsync";
 import { getPlayerID } from "../../utils/game";
@@ -13,10 +14,12 @@ const ListActivePlayers = () => {
     execute,
   } = useAsync<ActivePlayersResponse>(getActivePlayers, true);
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       execute();
-    }, 30000);
+    }, 10000);
 
     return () => {
       timeoutId && clearTimeout(timeoutId);
@@ -25,6 +28,7 @@ const ListActivePlayers = () => {
 
   return (
     <div className="active-players-box">
+      <h3>{t("Active players")}</h3>
       <ul>
         {status === ResponseStatus.SUCCESS &&
           activePlayersResponse?.data?.map(

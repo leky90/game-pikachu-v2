@@ -1,5 +1,5 @@
 import { BASE_WS_URL } from "../../types/chat";
-import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useSetRecoilState } from "recoil";
 import gameBattleState from "../../recoil/atoms/gameBattleState";
@@ -31,6 +31,7 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
       gameId,
     },
     onOpen: (event) => {
+      console.log("onOpen");
       const subscribeMessage = {
         command: 0,
         match: gameId,
@@ -65,6 +66,9 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
     sendUnReadyGame,
     sendQuitGame,
     sendSelectedPokemon,
+    sendIncreasePoints,
+    sendDecreasePoints,
+    sendGameEffect,
     sendJoinedGame,
   } = useGameBattleSocket({
     sendJsonMessage,
@@ -80,6 +84,9 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
       sendUnReadyGame,
       sendQuitGame,
       sendJoinedGame,
+      sendDecreasePoints,
+      sendIncreasePoints,
+      sendGameEffect,
     }));
   }, [
     sendSelectedPokemon,
@@ -87,6 +94,9 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
     sendUnReadyGame,
     sendQuitGame,
     sendJoinedGame,
+    sendDecreasePoints,
+    sendIncreasePoints,
+    sendGameEffect,
   ]);
 
   return readyState !== ReadyState.OPEN ? (

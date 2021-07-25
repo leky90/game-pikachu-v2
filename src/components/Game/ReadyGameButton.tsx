@@ -21,7 +21,6 @@ const ReadyGameButton: FC<ReadyGameButtonProps> = ({ status, player }) => {
   const onReady: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
       if ([GameStatus.PENDING, GameStatus.COMPLETED].includes(status)) {
-        playPopUpOnSound && playPopUpOnSound();
         if (classReady === "ready") {
           sendUnReadyGame && sendUnReadyGame();
         } else {
@@ -34,17 +33,11 @@ const ReadyGameButton: FC<ReadyGameButtonProps> = ({ status, player }) => {
     [sendReadyGame, sendUnReadyGame]
   );
 
-  useEffect(() => {
-    if (status === GameStatus.PENDING) {
-    }
-    return () => {};
-  }, [status]);
-
   return (
     <>
+      <strong>{t("You")}:</strong>
       <span>
-        <strong>{t("You")}:</strong> {getPlayerName(player)}{" "}
-        <em>(ID: {getPlayerID(player)})</em>
+        {getPlayerName(player)} <em>(ID: {getPlayerID(player)})</em>
       </span>
       <button className={`button-${status} ${classReady}`} onClick={onReady}>
         {[GameStatus.PENDING, GameStatus.COMPLETED].includes(status) &&

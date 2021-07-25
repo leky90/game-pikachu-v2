@@ -56,7 +56,8 @@ export enum GameTypeState {
   GAME_BATTLE_STATE = "GAME_BATTLE_STATE",
   SELECTED_POKEMONS = "SELECTED_POKEMONS",
   CHAT_SOCKET_STATE = "CHAT_SOCKET_STATE",
-  GAME_SUPPORTSTATE = "GAME_SUPPORTSTATE",
+  GAME_SUPPORT_STATE = "GAME_SUPPORT_STATE",
+  GAME_BATTLE_POINTS_STATE = "GAME_BATTLE_POINTS_STATE",
 }
 
 export enum GameStatus {
@@ -79,6 +80,7 @@ export interface GameState {
 export interface GameOverlayState {
   connectingLinePoints: PointCoords[];
   suggestPoints: [PointCoords | undefined, PointCoords | undefined];
+  freezing?: boolean;
 }
 
 export interface ChatSocketState {
@@ -88,15 +90,22 @@ export interface GameBattleState {
   gameId?: string;
   allReady: string[];
   competitor?: string;
-  competitorPoint?: number;
-  yourPoint?: number;
+  winner?: string;
   socketStatus: ReadyState;
   selectPokemon?: (rowIndex: number, colIndex: number) => void;
   sendReadyGame?: () => void;
   sendUnReadyGame?: () => void;
   sendQuitGame?: () => void;
   sendJoinedGame?: () => void;
+  sendDecreasePoints?: () => void;
+  sendIncreasePoints?: () => void;
+  sendGameEffect?: (effect: GameBattleEffect) => void;
   sendSelectedPokemon?: (rowIndex: number, colInddex: number) => void;
+}
+
+export interface GameBattlePointsState {
+  competitorPoint: number;
+  yourPoint: number;
 }
 
 export enum SocketCommand {
@@ -116,7 +125,7 @@ export interface GameSocketMessage {
 export interface ChatSocketMessage {
   command: SocketCommand;
   channel: string;
-  player: string;
+  name: string;
   content?: string;
   timestamp?: number;
 }
@@ -132,6 +141,10 @@ export enum GameSocketEvents {
   QUIT = "QUIT",
   JOINED = "JOINED",
   SELECTED_POKEMON = "SELECTED_POKEMON",
+  INCREASE_COMPETITOR_POINTS = "INCREASE_COMPETITOR_POINTS",
+  DECREASE_COMPETITOR_POINTS = "DECREASE_COMPETITOR_POINTS",
+  FREEZE_COMPETITOR_BOARD = "FREEZE_COMPETITOR_BOARD",
+  LEVEL_UP_POINTS = "LEVEL_UP_POINTS",
 }
 
 export enum ChatSocketEvents {
@@ -262,9 +275,24 @@ export const nextLevel = {
   [GameLevel.LEVEL_14]: GameLevel.LEVEL_14,
 };
 
+export enum GameBattleEffect {
+  LEVEL_UP = "LEVEL_UP",
+  FREEZE = "FREEZE",
+}
+
+export const gameBattleEffect = [
+  GameBattleEffect.LEVEL_UP,
+  GameBattleEffect.FREEZE,
+];
+
 export const LEVEL_MAX = GameLevel.LEVEL_14;
+export const LEVEL_BATTLE_MAX = GameLevel.LEVEL_10;
 export const BASE_START_TIME = 300;
 export const SUGGEST_TIME = 10;
 export const BONUS_TIME = 2;
+export const FREEZING_TIME = 5;
 export const PENALTY_TIME = 5;
 export const PENDING_TIME = 3;
+export const PENALTY_POINTS = 5;
+export const BONUS_POINTS = 5;
+export const LEVEL_UP_POINTS = 10;

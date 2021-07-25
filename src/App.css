@@ -93,7 +93,8 @@ input:disabled {
   background: gray;
 }
 
-button {
+button,
+.button {
   text-decoration: none;
   max-width: 100%;
   width: 230px;
@@ -126,6 +127,31 @@ button:hover {
   text-decoration: none;
   box-shadow: 0 0 5px #eee;
   opacity: 1;
+}
+
+.button-join-game {
+  padding: 4px 8px;
+  margin: 4px;
+}
+
+.inline-button {
+  position: relative;
+}
+
+.inline-button input {
+  text-align: left;
+  padding-right: 90px;
+}
+
+.inline-button button {
+  padding: 4px 6px;
+  font-size: 13px;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  margin: 0;
+  transform: translateY(-50%);
 }
 
 .mobile-helper {
@@ -349,6 +375,39 @@ button:hover {
   height: 100%;
 }
 
+.game-overlay.freezing-board {
+  z-index: 9999;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+}
+
+.game-overlay.freezing-board::before {
+  content: "Freezing";
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 3px 3px #26a0da;
+  box-shadow: inset 0 0 2000px 500px rgba(38, 160, 218, 0.5);
+  filter: blur(10px);
+}
+
+.game-overlay.freezing-board::after {
+  content: "Freezing";
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 3px 3px #26a0da;
+}
+
 .board-3x4 {
   grid-template-columns: repeat(6, calc(100% / 6));
 }
@@ -533,7 +592,8 @@ button:hover {
 }
 
 .chat-box-container,
-.active-players-box {
+.active-players-box,
+.active-boxes {
   flex: 1;
   border-radius: 8px;
   border: 1px solid #3b82f6;
@@ -545,22 +605,28 @@ button:hover {
   box-sizing: border-box;
 }
 
+.active-boxes {
+  justify-content: space-between;
+}
+
+.active-boxes h3 {
+  margin: 0;
+}
+
+.active-players-box {
+  flex: 0 0 49%;
+  overflow: auto;
+}
+
+.active-boxes {
+  flex: 0 0 30%;
+  overflow: auto;
+}
+
 .active-players-box ul {
   padding: 0;
   margin: 0;
   list-style: none;
-}
-
-.messages-box {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.active-players-box {
-  flex: 0 0 200px;
-  overflow: auto;
 }
 
 .active-player {
@@ -568,6 +634,7 @@ button:hover {
   padding: 6px 0;
   line-height: 1.5;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .active-player * {
@@ -576,6 +643,13 @@ button:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.messages-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
 .message {
@@ -613,6 +687,9 @@ button:hover {
   padding: 8px;
   border-radius: 8px;
   margin: 4px 0;
+}
+
+.message-content em {
 }
 
 .message-date {
@@ -920,11 +997,13 @@ i.icono-volumeMute {
   flex: 1;
   background-color: orangered;
   position: relative;
+  overflow: hidden;
 }
 
 .your-bar {
   width: 50%;
   height: 100%;
+  transition: all 0.5s;
 }
 
 .your-bar > .point {

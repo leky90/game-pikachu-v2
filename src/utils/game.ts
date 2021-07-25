@@ -7,6 +7,7 @@ import {
   PointType,
   nextLevel,
   GameLevel,
+  gameBattleEffect,
 } from "../types/game";
 
 const BASE_URL =
@@ -523,4 +524,9 @@ export function randomLevel() {
   const index = Math.floor(Math.random() * Object.keys(nextLevel).length) + 1;
   const level = `LEVEL_${index}` as GameLevel;
   return nextLevel[level];
+}
+
+export function randomEffectEvent() {
+  const index = Math.floor(Math.random() * gameBattleEffect.length);
+  return gameBattleEffect[index];
 }

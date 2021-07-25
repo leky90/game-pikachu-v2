@@ -1,11 +1,12 @@
 import { Response } from "../hooks/useAsync";
 import BASE_API from "./CONSTANTS";
+import { ActivePlayersResponse } from "./user";
 
-export interface ActivePlayersResponse extends Response {
+export interface ActiveGamesResponse extends Response {
   data: string[];
 }
 
-const getActiveGames = (): Promise<ActivePlayersResponse> => {
+const getActiveGames = (): Promise<ActiveGamesResponse> => {
   return fetch(`${BASE_API}/games`)
     .then((res) => res.json())
     .then(

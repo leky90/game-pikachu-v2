@@ -14,7 +14,7 @@ export default function useChatSocket({
   const baseMessageJson: ChatSocketMessage = {
     command: SocketCommand.SEND_MESSAGE,
     channel: DEFAULT_CHANNEL,
-    player,
+    name: player,
   };
   const sendMakeGame = (message: string) => {
     const messageJson = {

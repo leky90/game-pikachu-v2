@@ -16,13 +16,8 @@ const CompetitorReadyGameButton: FC<CompetitorReadyGameButtonProps> = ({
   player,
 }) => {
   const { t } = useTranslation();
-  const { playPopUpOnSound } = useRecoilValue(gameSoundState);
   const { allReady, competitor } = useRecoilValue(gameBattleState);
   const classReady = allReady.includes(competitor ?? "") ? "ready" : "";
-
-  useEffect(() => {
-    playPopUpOnSound && playPopUpOnSound();
-  }, [competitor]);
 
   return (
     <>

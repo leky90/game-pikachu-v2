@@ -2,13 +2,15 @@ import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router-dom";
 import useAsync, { ResponseStatus } from "../hooks/useAsync";
 import { getPlayersInGame } from "../api/game";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import GameBattleContainer from "../components/Game/GameBattleContainner";
 import playerState from "../recoil/atoms/playerState";
 import { useRecoilValue } from "recoil";
 import { Routes } from "../routes/CONSTANTS";
+import { useTranslation } from "react-i18next";
 
 const BattleModePage = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { gameId } = useParams<{ gameId: string }>();
   const { player } = useRecoilValue(playerState);
@@ -21,11 +23,14 @@ const BattleModePage = () => {
 
   const playersInGame: string[] = playersInGameResponse?.data ?? [];
 
-  if (fetchStatus === ResponseStatus.SUCCESS) {
-    if (playersInGame.length >= 2) {
-      history.push(Routes.MULTI_PLAYER_PAGE);
+  useEffect(() => {
+    if (fetchStatus === ResponseStatus.SUCCESS) {
+      if (playersInGame.length >= 2) {
+        alert(t("The game was full slot!!!"));
+        history.push(Routes.MULTI_PLAYER_PAGE);
+      }
     }
-  }
+  }, [fetchStatus]);
 
   return (
     <div className="game-battle-container">
