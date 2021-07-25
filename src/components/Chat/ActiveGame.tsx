@@ -13,7 +13,7 @@ const ActiveGame: FC<ActiveGame> = ({ gameId }) => {
     <li className="active-player">
       <Link to={Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId)}>
         <button className="button-join-game">
-          {t("Click to join")}: {gameId}
+          <span className="hidden-mobile">{t("Click to join")}:</span> {gameId}
         </button>
       </Link>
     </li>

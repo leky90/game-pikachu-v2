@@ -10,8 +10,7 @@ const Welcome = () => {
   return (
     <>
       <h2 className="text-center">
-        {t("Welcome")}, <br />
-        {getPlayerName(player)}
+        {t("Welcome")},{getPlayerName(player)}
       </h2>
       <p className="text-center">ID: {getPlayerID(player)}</p>
     </>

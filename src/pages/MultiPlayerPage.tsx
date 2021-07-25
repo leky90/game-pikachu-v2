@@ -66,6 +66,7 @@ const MultiPlayerPage = () => {
       <div className="sidebar">
         <div className="game-info">
           <h1 className="game-title">{t("Multi player")}</h1>
+          <p className="mobile-helper">{t("Scroll down to chat")}</p>
           <Welcome />
         </div>
         <div>
@@ -89,7 +90,6 @@ const MultiPlayerPage = () => {
             </Link>
           </div>
         </div>
-        <p className="mobile-helper">{t("Scroll down to chat")}</p>
         <SwitchLanguage />
       </div>
     </div>

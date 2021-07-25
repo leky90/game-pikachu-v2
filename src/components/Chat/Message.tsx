@@ -33,7 +33,8 @@ const Message: FC<MessageProps> = ({ message }) => {
           {content.replace(/ID - `([^`]{8})`$/, "")}{" "}
           {gameId && (
             <em onClick={joinGame} className="button button-join-game">
-              {t("Click to join")}: {gameId}
+              <span className="hidden-mobile">{t("Click to join")}:</span>{" "}
+              {gameId}
             </em>
           )}
         </strong>

@@ -652,6 +652,10 @@ button:hover {
   cursor: pointer;
 }
 
+.active-player strong {
+  color: #26a0da;
+}
+
 .active-player * {
   display: block;
   max-width: 100%;
@@ -1107,8 +1111,10 @@ i.icono-volumeMute {
   }
   .mobile-helper {
     display: block;
-    color: #60a5fa;
+    color: orangered;
     text-align: center;
+    font-weight: bold;
+    text-shadow: 0px 1px #fff;
   }
   .game-board .game-info .mobile-helper {
     display: none;
@@ -1151,13 +1157,35 @@ i.icono-volumeMute {
   }
 }
 
-@media screen and (max-width: 467px) {
+@media screen and (max-width: 768px) {
+  .chat-board {
+    background-image: none;
+  }
   .row {
     flex-direction: column;
   }
-  .active-players-box {
+  .active-boxes {
     flex-basis: 140px;
+    padding: 0;
+    justify-content: space-around;
   }
-  .player-box {
+  .active-boxes h3 {
+    font-size: 14px;
+  }
+  .active-boxes .active-player {
+    font-size: 12px;
+  }
+  .active-boxes .active-player small {
+    font-size: 10px;
+  }
+  .active-players-box {
+    padding: 8px;
+  }
+  .button-join-game {
+    font-size: 10px;
+    width: auto;
+  }
+  .hidden-mobile {
+    display: none;
   }
 }

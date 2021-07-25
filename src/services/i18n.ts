@@ -45,7 +45,7 @@ i18n
           "Click to join": "Click to join",
           "Coming soon...": "Coming soon...",
           "Scroll down to play": "Scroll down to play",
-          "Scroll down to chat": "Scroll down to chat",
+          "Scroll down to chat": "Scroll down to chat and find match",
           "Preparing resource...": "Preparing resource...",
           "Please complete all levels as fast as you can":
             "Please complete all levels as fast as you can",
@@ -133,7 +133,7 @@ i18n
           "Click to join": "Tham gia",
           "Preparing resource...": "Đang chuẩn bị...",
           "Scroll down to play": "Lăn chuột xuống để chơi",
-          "Scroll down to chat": "Lăn chuột xuống để nhắn tin",
+          "Scroll down to chat": "Lăn chuột xuống để nhắn tin và tìm trận",
           "Please complete all levels as fast as you can":
             "Hãy hoàn thành tất cả cấp độ nhanh nhất có thể ",
           "Try your best not to run out of time as long as possible":
