@@ -15,14 +15,16 @@ const Message: FC<MessageProps> = ({ message }) => {
   const { player } = useRecoilValue(playerState);
   const { t } = useTranslation();
   const history = useHistory();
-  let gameId = undefined;
+  let gameId: string | undefined = undefined;
   try {
     const { name, content, timestamp } = JSON.parse(message);
     const matched = content.match(/ID - `([^`]{8})`$/);
+    if (matched[1]) {
+      gameId = matched[1];
+    }
     const selfClass = player === name ? "self" : "";
     const joinGame = () => {
-      if (matched[1]) {
-        gameId = matched[1];
+      if (gameId) {
         history.push(Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId));
       }
     };
