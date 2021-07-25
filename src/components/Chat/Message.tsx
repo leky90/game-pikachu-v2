@@ -19,7 +19,7 @@ const Message: FC<MessageProps> = ({ message }) => {
   try {
     const { name, content, timestamp } = JSON.parse(message);
     const matched = content.match(/ID - `([^`]{8})`$/);
-    if (matched[1]) {
+    if (matched && matched[1]) {
       gameId = matched[1];
     }
     const selfClass = player === name ? "self" : "";
