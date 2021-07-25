@@ -15,22 +15,25 @@ const Message: FC<MessageProps> = ({ message }) => {
   const { player } = useRecoilValue(playerState);
   const { t } = useTranslation();
   const history = useHistory();
+  let gameId = undefined;
   try {
     const { name, content, timestamp } = JSON.parse(message);
-    const [_, gameId] = content.match(/ID - `([^`]{8})`$/);
+    const matched = content.match(/ID - `([^`]{8})`$/);
     const selfClass = player === name ? "self" : "";
     const joinGame = () => {
-      if (gameId) {
+      if (matched[1]) {
+        gameId = matched[1];
         history.push(Routes.BATTLE_MODE_PAGE.replace(":gameId", gameId));
       }
     };
+
     return (
       <div className={`message ${selfClass}`}>
         <small className="message-name">
           {getPlayerName(name)} <em>(ID: {getPlayerID(name)})</em>
         </small>
         <strong className="message-content">
-          {content}{" "}
+          {content.replace(/ID - `([^`]{8})`$/, "")}{" "}
           {gameId && (
             <em onClick={joinGame} className="button button-join-game">
               <span className="hidden-mobile">{t("Click to join")}:</span>{" "}
@@ -43,7 +46,8 @@ const Message: FC<MessageProps> = ({ message }) => {
         </small>
       </div>
     );
-  } catch {
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
