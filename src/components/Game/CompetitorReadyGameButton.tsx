@@ -22,12 +22,14 @@ const CompetitorReadyGameButton: FC<CompetitorReadyGameButtonProps> = ({
   return (
     <>
       <button className={`button-${status} ${classReady}`}>{t("Ready")}</button>
-      {competitor && (
-        <span>
-          <em>(ID: {getPlayerID(competitor)})</em> {getPlayerName(competitor)}{" "}
-        </span>
-      )}
-      <strong>:{t("Competitor")}</strong>
+      <div>
+        {competitor && (
+          <span>
+            <em>(ID: {getPlayerID(competitor)})</em> {getPlayerName(competitor)}{" "}
+          </span>
+        )}
+        <strong>:{t("Competitor")}</strong>
+      </div>
     </>
   );
 };

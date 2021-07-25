@@ -55,6 +55,13 @@ export function useGameBattleActions() {
     reSetupGame();
   };
 
+  const pendingGame = () => {
+    setGame((prevGame) => ({
+      ...prevGame,
+      status: GameStatus.PENDING,
+    }));
+  };
+
   const initGame = useCallback(
     (level: GameLevel, status: GameStatus = GameStatus.PENDING) => {
       const { row, col } = gameOptions[level];
@@ -128,6 +135,14 @@ export function useGameBattleActions() {
     }));
   };
 
+  const levelUpYourPoints = () => {
+    playGlugSound && playGlugSound();
+    setGameBattlePoints((gameBattlePoints) => ({
+      ...gameBattlePoints,
+      yourPoint: gameBattlePoints.yourPoint + LEVEL_UP_POINTS,
+    }));
+  };
+
   const handleSocketEvents = ({
     event,
     content,
@@ -136,14 +151,14 @@ export function useGameBattleActions() {
     match,
     currentPlayer,
   }: GameSocketMessage) => {
-    console.log("handleSocketEvents", {
-      event,
-      content,
-      player,
-      command,
-      match,
-      currentPlayer,
-    });
+    // console.log("handleSocketEvents", {
+    //   event,
+    //   content,
+    //   player,
+    //   command,
+    //   match,
+    //   currentPlayer,
+    // });
     switch (event) {
       case GameSocketEvents.READY:
         playOpenMenuSound && playOpenMenuSound();
@@ -234,8 +249,10 @@ export function useGameBattleActions() {
     endGame,
     selectBattlePokemon,
     resetGame,
+    pendingGame,
     increaseYourPoints,
     decreaseYourPoints,
+    levelUpYourPoints,
     handleSocketEvents,
   };
 }

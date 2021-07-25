@@ -302,6 +302,21 @@ button:hover {
   border: 3px solid #fff;
 }
 
+.game-board.game-pending .battle-rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.game-board.game-pending .game-info .battle-rule * {
+  display: block;
+  margin: 8px;
+}
+
 .game-board.game-running .game-info {
   display: none;
 }
@@ -959,6 +974,7 @@ i.icono-volumeMute {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+  position: relative;
 }
 
 .player-box {
@@ -1115,6 +1131,24 @@ i.icono-volumeMute {
     background-size: 200px auto;
     background-position: center 20px;
   }
+  .game-battle-container {
+    padding: 0;
+  }
+  .battle-container-bar {
+    padding: 8px 4px;
+    margin: 0;
+  }
+  .battle-bar {
+    position: fixed;
+    width: 100%;
+    height: 30px;
+    bottom: 0;
+    left: 0;
+    z-index: 111111;
+  }
+  .player-box {
+    width: auto;
+  }
 }
 
 @media screen and (max-width: 467px) {
@@ -1123,5 +1157,7 @@ i.icono-volumeMute {
   }
   .active-players-box {
     flex-basis: 140px;
+  }
+  .player-box {
   }
 }

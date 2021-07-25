@@ -25,7 +25,7 @@ const BattleModePage = () => {
 
   useEffect(() => {
     if (fetchStatus === ResponseStatus.SUCCESS) {
-      if (playersInGame.length >= 2) {
+      if (playersInGame.length >= 2 && !playersInGame.includes(player)) {
         alert(t("The game was full slot!!!"));
         history.push(Routes.MULTI_PLAYER_PAGE);
       }

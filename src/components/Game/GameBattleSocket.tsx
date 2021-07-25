@@ -31,7 +31,7 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
       gameId,
     },
     onOpen: (event) => {
-      console.log("onOpen");
+      // console.log("onOpen");
       const subscribeMessage = {
         command: 0,
         match: gameId,
@@ -54,10 +54,10 @@ const GameBattleSocket: FC<GameBattleSocketProps> = ({ gameId, player }) => {
       handleSocketEvents(messageData);
     },
     onError: (event) => {
-      console.log("onError", event);
+      // console.log("onError", event);
     },
     onClose: (event) => {
-      console.log("onClose", event);
+      // console.log("onClose", event);
     },
   });
 

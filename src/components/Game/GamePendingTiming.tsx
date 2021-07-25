@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import gameState from "../../recoil/atoms/gameState";
-import { GameStatus, PENDING_TIME } from "../../types/game";
+import {
+  BONUS_POINTS,
+  FREEZING_TIME,
+  GameStatus,
+  LEVEL_UP_POINTS,
+  PENALTY_POINTS,
+  PENDING_TIME,
+} from "../../types/game";
 import { useGameBattleActions } from "../../hooks/useGameBattleActions";
 import { getPlayerID, getPlayerName } from "../../utils/game";
 import { useTranslation } from "react-i18next";
@@ -79,13 +86,42 @@ const GamePendingTiming = () => {
           <h1 className="text-big-title">{winnerPlayerName}</h1>
         </div>
       )}
-      <div
-        key="count-down"
-        id="count-down-pending-timing"
-        className="overlay-pending-timing"
-      >
-        {pendingTiming.current}
-      </div>
+      {status === GameStatus.PENDING && (
+        <div className="battle-rule">
+          <h1 className="game-title">{t("Battle rule")}</h1>
+          <blockquote>
+            {t("Matched pair of pokemon, your points will be increased", {
+              point: BONUS_POINTS,
+            })}
+          </blockquote>
+          <blockquote>
+            {t(
+              "Matched the wrong pair of pokemon, your points will be decreased",
+              { point: PENALTY_POINTS }
+            )}
+          </blockquote>
+          <blockquote>
+            {t(
+              "If your points are over competitor points 50 points. You are the winner and vice versa."
+            )}
+          </blockquote>
+          <blockquote>
+            {t(
+              "Every time you level up, you will deal 1 of 2 effects `Freeze enemy` or `Give points to yourself`",
+              { second: FREEZING_TIME, point: LEVEL_UP_POINTS }
+            )}
+          </blockquote>
+        </div>
+      )}
+      {status === GameStatus.READY && (
+        <div
+          key="count-down"
+          id="count-down-pending-timing"
+          className="overlay-pending-timing"
+        >
+          {pendingTiming.current}
+        </div>
+      )}
     </div>
   );
 };

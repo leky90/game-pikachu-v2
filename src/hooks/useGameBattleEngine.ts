@@ -5,6 +5,7 @@ import gameSoundState from "../recoil/atoms/gameSoundState";
 import gameState from "../recoil/atoms/gameState";
 import playerState from "../recoil/atoms/playerState";
 import {
+  GameBattleEffect,
   GameLevel,
   GameStatus,
   LEVEL_BATTLE_MAX,
@@ -30,8 +31,10 @@ export default function useGameBattleEngine() {
     endGame,
     onReadyGame,
     startGame,
+    pendingGame,
     increaseYourPoints,
     decreaseYourPoints,
+    levelUpYourPoints,
   } = useGameBattleActions();
   const setGame = useSetRecoilState(gameState);
   const currentPlayer = useRecoilValue(playerState);
@@ -96,6 +99,9 @@ export default function useGameBattleEngine() {
     if ([GameStatus.RUNNING].includes(status) && allReady.length === 1) {
       endGame(allReady[0]);
     }
+    if ([GameStatus.COMPLETED].includes(status) && allReady.length === 1) {
+      pendingGame();
+    }
     if ([GameStatus.READY].includes(status)) {
       if (allReady.length === 1) {
         resetGame();
@@ -128,6 +134,10 @@ export default function useGameBattleEngine() {
       const effectEvent = randomEffectEvent();
 
       sendGameEffect && sendGameEffect(effectEvent);
+
+      if (effectEvent === GameBattleEffect.LEVEL_UP) {
+        levelUpYourPoints();
+      }
 
       playCompletedGameSound && playCompletedGameSound();
     } else {

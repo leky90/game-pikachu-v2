@@ -13,7 +13,6 @@ interface ReadyGameButtonProps {
 
 const ReadyGameButton: FC<ReadyGameButtonProps> = ({ status, player }) => {
   const { t } = useTranslation();
-  const { playPopUpOnSound } = useRecoilValue(gameSoundState);
   const { sendReadyGame, sendUnReadyGame, allReady } =
     useRecoilValue(gameBattleState);
   const classReady = allReady.includes(player) ? "ready" : "";
@@ -35,10 +34,12 @@ const ReadyGameButton: FC<ReadyGameButtonProps> = ({ status, player }) => {
 
   return (
     <>
-      <strong>{t("You")}:</strong>
-      <span>
-        {getPlayerName(player)} <em>(ID: {getPlayerID(player)})</em>
-      </span>
+      <div>
+        <strong>{t("You")}:</strong>
+        <span>
+          {getPlayerName(player)} <em>(ID: {getPlayerID(player)})</em>
+        </span>
+      </div>
       <button className={`button-${status} ${classReady}`} onClick={onReady}>
         {[GameStatus.PENDING, GameStatus.COMPLETED].includes(status) &&
           t("Ready")}

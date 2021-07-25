@@ -26,6 +26,7 @@ i18n
           You: "You",
           Competitor: "Competitor",
           Join: "Join",
+          "Battle rule": "Battle rule",
           "Your points": "Your points",
           "Competitor points": "Competitor points",
           "The fastest is best": "The fastest is best",
@@ -80,6 +81,14 @@ i18n
             "(Help) Hi {{name}}, you can click on a `Game ID` of others to join the match.",
           "(Help) Please click on make match to create your own match!":
             "(Help) Hi {{name}}, you click on `Make match` button to create your own match!",
+          "If your points are over competitor points 50 points. You are the winner and vice versa.":
+            "If your points are over competitor points 50 points. You are the winner and vice versa.",
+          "Matched the wrong pair of pokemon, your points will be decreased":
+            "Matched the wrong pair of pokemon, your points will be decreased by {{point}} points.",
+          "Matched pair of pokemon, your points will be increased":
+            "Matched pair of pokemon, your points will be increased by {{point}} points.",
+          "Every time you level up, you will deal 1 of 2 effects `Freeze enemy` or `Give points to yourself`":
+            "Every time you level up, you will deal 1 of 2 effects `Freeze enemy {{second}} second` or `Give {{point}} points to yourself`",
         },
       },
       vi: {
@@ -100,6 +109,7 @@ i18n
           You: "Bạn",
           Competitor: "Đối thủ",
           Join: "Tham gia",
+          "Battle rule": "Luật chơi",
           "Active players": "Người chơi",
           "Active games": "Trận đấu",
           "Your points": "Điểm của bạn",
@@ -159,6 +169,14 @@ i18n
             "(Hỗ trợ) Chào {{name}}, bạn có thể click vào `Game ID` của người khác để tham gia trận đấu.",
           "(Help) Please click on make match to create your own match!":
             "(Hỗ trợ) Chào {{name}}, Bạn hãy bấm nút `Tạo trận` để có thể bắt đầu trận đấu của mình!",
+          "If your points are over competitor points 50 points. You are the winner and vice versa.":
+            "Nếu điểm của bạn hơn đối thủ cạnh tranh 50 điểm. Bạn là người chiến thắng và ngược lại.",
+          "Matched the wrong pair of pokemon, your points will be decreased":
+            "Kết hợp sai cặp pokemon, điểm của bạn sẽ bị giảm {{point}} điểm.",
+          "Matched pair of pokemon, your points will be increased":
+            "Chọn cặp pokemon phù hợp, điểm của bạn sẽ được tăng lên {{point}} điểm",
+          "Every time you level up, you will deal 1 of 2 effects `Freeze enemy` or `Give points to yourself`":
+            "Mỗi khi tăng cấp bạn sẽ gây 1 trong 2 hiệu ứng `Đóng băng đối phương {{second}} giây` hoặc `Tăng {{point}} điểm cho bản thân`",
         },
       },
     },
