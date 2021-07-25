@@ -15,6 +15,7 @@ const Message: FC<MessageProps> = ({ message }) => {
   const { player } = useRecoilValue(playerState);
   const { t } = useTranslation();
   const history = useHistory();
+
   let gameId: string | undefined = undefined;
   try {
     const { name, content, timestamp } = JSON.parse(message);
